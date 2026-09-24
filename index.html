@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다크에덴 REBORN</title>
+  <style>
+    @font-face {
+      font-family: 'Ridibatang';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'HeirofLight';
+      src: url('fonts/HeirofLightBold.ttf') format('truetype');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
+      font-weight: 100;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');
+      font-weight: 200;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');
+      font-weight: 800;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');
+      font-weight: 900;
+      font-display: swap;
+    }
+
+    :root {
+      --red: #980000;
+      --gray: #C3C3C3;
+      --white: #ffffff;
+      --section-gap: 200px;   /* 섹션별 간격 */
+      --header-h: 74px;
+      --inner: 1400px;
+      --band: #1B1B1B;
+      --qw: min(1600px, 88vw, 140vh);   /* 퀵메뉴 프레임 너비 */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Ridibatang', serif;
+      background: #000;
+      color: var(--white);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; background: none; border: 0; cursor: pointer; color: inherit; }
+
+    /* 섹션 간격 200px (배경이 이어지도록 섹션 안쪽 여백으로 적용) */
+    main > section ~ section { padding-top: var(--section-gap); }
+    main > section ~ section:last-child { padding-bottom: var(--section-gap); }
+
+    /* 히어로 아래 공통 그리드: 12 Columns / Stretch / Margin 260 / Gutter 30 */
+    :root { --grid-margin: 260px; --grid-gutter: 30px; }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gutter);
+      padding: 0 var(--grid-margin);
+    }
+
+    /* ================= HEADER ================= */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--header-h);
+      background: rgba(0, 0, 0, 0.65);   /* 메뉴바 65% */
+    }
+    .header__inner {
+      height: 100%;
+      padding: 0 56px 0 60px;
+      display: flex;
+      align-items: center;
+    }
+    .header__logo img { width: 125px; }
+
+    .header__games {
+      display: flex;
+      align-items: center;
+      margin-left: 46px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .header__games a + a::before {
+      content: '';
+      display: inline-block;
+      width: 1px; height: 14px;
+      background: rgba(255,255,255,.6);
+      margin: 0 6px;
+      vertical-align: -2px;
+    }
+
+    .header nav { height: 100%; }
+    .gnb {
+      position: absolute;
+      left: 50%; top: 0;
+      height: 100%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 54px;
+      font-size: 14px;
+    }
+    .gnb > li {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .gnb__link { position: relative; padding: 6px 0; white-space: nowrap; transition: color .2s; }
+    .gnb__link::after {
+      content: '';
+      position: absolute; left: 0; bottom: 0;
+      width: 0; height: 2px; background: var(--red);
+      transition: width .25s;
+    }
+    .gnb > li:hover > .gnb__link::after { width: 100%; }
+
+    /* 소메뉴 (마우스 올리면 표시) */
+    .gnb__sub {
+      position: absolute;
+      top: 100%; left: 50%;
+      min-width: 150px;
+      padding: 12px 0;
+      background: rgba(0, 0, 0, 0.88);
+      border-top: 2px solid var(--red);
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -8px);
+      transition: opacity .25s, transform .25s, visibility .25s;
+    }
+    .gnb > li:hover .gnb__sub,
+    .gnb > li:focus-within .gnb__sub {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+    .gnb__sub a {
+      display: block;
+      padding: 9px 20px;
+      font-size: 13px;
+      color: #c9c9c9;
+      white-space: nowrap;
+      transition: color .2s, background .2s;
+    }
+    .gnb__sub a:hover { color: var(--white); background: rgba(152, 0, 0, 0.35); }
+
+    .header__util {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .header__search img { width: 20px; height: 20px; }
+    .header__util .bar {
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,.5);
+      margin: 0 14px 0 18px;
+    }
+    .btn-line {
+      display: inline-block;
+      padding: 3px 9px;
+      font-size: 14px;
+      border: 1px solid var(--white);
+      line-height: 1.3;
+      white-space: nowrap;
+      transition: background .2s, color .2s;
+    }
+    .btn-line + .btn-line { margin-left: 18px; }
+    .btn-line:hover { background: var(--white); color: #000; }
+    .btn-line.is-red { border-color: var(--red); color: var(--red); }
+    .btn-line.is-red:hover { background: var(--red); color: var(--white); }
+
+    .menu-toggle { display: none; width: 28px; height: 20px; position: relative; margin-left: 16px; }
+    .menu-toggle span {
+      position: absolute; left: 0; width: 100%; height: 2px; background: var(--white);
+      transition: transform .3s, opacity .3s;
+    }
+    .menu-toggle span:nth-child(1) { top: 0; }
+    .menu-toggle span:nth-child(2) { top: 9px; }
+    .menu-toggle span:nth-child(3) { top: 18px; }
+    .header.is-open .menu-toggle span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .header.is-open .menu-toggle span:nth-child(2) { opacity: 0; }
+    .header.is-open .menu-toggle span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* ================= HERO ================= */
+    /* 첫 화면: 히어로 + 퀵메뉴가 한 화면(100vh)에 모두 보이도록 */
+    .visual {
+      position: relative;
+      height: 100vh;
+      height: 100svh;
+      min-height: 720px;
+    }
+    .hero {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero__slides, .hero__slide { position: absolute; inset: 0; }
+    /* 히어로 하단을 다음 섹션 색으로 서서히 어둡게 → 자연스럽게 연결 */
+    .hero::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 38%;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(8,0,0,0) 0%, rgba(8,0,0,.55) 55%, #080000 100%);
+    }
+    .hero__slide {
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity 1.2s ease, transform 6s ease-out;
+    }
+    .hero__slide.is-active { opacity: 1; transform: scale(1); }
+    .hero__slide--1 { background-image: url('images/hero_background_img.png'); }
+    .hero__slide--2 { background-image: url('images/hero_background_img2.png'); }
+    .hero__slide--3 { background-image: url('images/hero_background_img3.png'); }
+    /* 3번 이미지는 가운데가 밝아서 글자가 잘 보이도록 살짝 어둡게 */
+    .hero__slide--3::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 45% 60% at 50% 50%, rgba(0,0,0,.55), rgba(0,0,0,.15) 70%, transparent);
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--header-h) 20px calc(var(--qw) * 0.215 + 70px);
+    }
+    .hero__copy {
+      font-size: 30px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,.8);
+    }
+    .hero__copy em { font-style: normal; color: var(--red); text-shadow: 0 0 6px rgba(0,0,0,.9), 0 2px 10px rgba(0,0,0,.9); }
+
+    .hero__title { margin: 10px 0 6px; }
+    .hero__title img { width: 540px; }
+
+    .hero__desc {
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,.8);
+    }
+    .hero__start {
+      display: block;
+      width: 340px;
+      margin-top: 42px;
+      transition: transform .25s, filter .25s;
+    }
+    .hero__start:hover { transform: translateY(-3px); filter: brightness(1.15) drop-shadow(0 0 16px rgba(152,0,0,.8)); }
+
+    /* 01 ── -- 03 페이지네이션 */
+    .hero__paging {
+      position: absolute;
+      left: 50%; bottom: calc(var(--qw) * 0.215 + 18px);
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+    }
+    .hero__bars { display: flex; align-items: center; gap: 4px; }
+    .hero__bars button {
+      width: 10px; height: 2px;
+      background: var(--gray);
+      transition: width .35s, background .35s;
+      position: relative;
+    }
+    .hero__bars button::before { content: ''; position: absolute; inset: -10px 0; } /* 클릭 영역 확대 */
+    .hero__bars button.is-active { width: 40px; background: var(--red); }
+
+    /* ================= QUICK MENU (프레임 이미지) ================= */
+    .quick {
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--qw) * -0.04 + 6px);
+      transform: translateX(-50%);
+      z-index: 4;
+      width: var(--qw);
+      aspect-ratio: 2171 / 724;
+      background: url('images/hero_Quick%20Menu.png') center / 100% 100% no-repeat;
+      font-family: 'Pretendard', sans-serif;
+      pointer-events: none;           /* 투명한 부분은 클릭 통과 */
+    }
+    .quick__list { position: absolute; inset: 0; }
+    /* 프레임의 칸 4개 위치(이미지 기준 %) */
+    .quick__list li {
+      position: absolute;
+      top: 48.3%;
+      height: 27%;
+      pointer-events: auto;
+    }
+    .quick__list li:nth-child(1) { left: 5.5%;  width: 20.5%; }
+    .quick__list li:nth-child(2) { left: 26.8%; width: 22.7%; }
+    .quick__list li:nth-child(3) { left: 50.2%; width: 23%; }
+    .quick__list li:nth-child(4) { left: 73.6%; width: 20.8%; }
+    .quick__list a {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--qw) * 0.011);
+    }
+    .quick__list img {
+      height: calc(var(--qw) * 0.027); width: auto;
+      flex-shrink: 0;
+      transition: transform .25s, filter .25s;
+    }
+    .quick__list strong {
+      display: block;
+      font-size: max(12px, calc(var(--qw) * 0.0132));
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+    .quick__list span {
+      display: block;
+      margin-top: 3px;
+      font-size: max(10px, calc(var(--qw) * 0.0094));
+      font-weight: 300;
+      color: #d0d0d0;
+      white-space: nowrap;
+    }
+    /* 오른쪽 동그라미 화살표 */
+    .quick__arrow {
+      flex-shrink: 0;
+      width: calc(var(--qw) * 0.0165);
+      height: calc(var(--qw) * 0.0165);
+      margin-left: calc(var(--qw) * 0.008);
+      border: 1.5px solid var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .25s, border-color .25s;
+    }
+    .quick__arrow svg { width: 55%; height: 55%; fill: none; stroke: var(--white); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+    .quick__list a:hover img { transform: translateY(-3px); filter: drop-shadow(0 0 8px rgba(255,0,0,.8)); }
+    .quick__list a:hover .quick__arrow { background: var(--red); border-color: var(--red); }
+
+    /* ================= UPDATE (신규 하피 등급 레어 스킬) ================= */
+    .update {
+      position: relative;
+      background: #080000 url('images/main_section_bg.jpg') center top / cover no-repeat;
+      overflow: hidden;
+    }
+    /* 섹션 상단도 히어로 끝 색에서 시작해 배경이 서서히 드러나도록 */
+    .update::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 420px;
+      pointer-events: none;
+      background: linear-gradient(180deg, #080000 0%, rgba(8,0,0,.75) 35%, rgba(8,0,0,0) 100%);
+    }
+    .update > .container { position: relative; z-index: 1; }
+    .update__head {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+    /* UPDATE 56 개발예정사항 (이미지) */
+    .update__badge img { width: 380px; margin: 0 auto; }
+    /* 신규 하피 등급 레어 스킬 */
+    .update__title {
+      margin-top: 30px;
+      font-family: 'HeirofLight', 'Ridibatang', serif;
+      font-weight: 700;
+      font-size: 72px;
+      line-height: 1.3;
+      letter-spacing: -1px;
+      text-shadow: 0 4px 18px rgba(0,0,0,.7);
+    }
+    .update__title em { font-style: normal; color: #CF0000; }
+    /* 슬레이어 (이미지) */
+    .update__class { margin-top: 10px; }
+    .update__class img { width: 460px; margin: 0 auto; }
+
+    /* 스킬 카드 */
+    .skill-card {
+      grid-column: span 5;   /* 12컬럼 중 5칸씩 */
+      position: relative;
+      margin-top: 130px;
+      aspect-ratio: 1185 / 1327;
+    }
+    .skill-card--1 { grid-column: 2 / span 5; }   /* 2~6칸 */
+    .skill-card--2 { grid-column: 7 / span 5; }   /* 7~11칸 → 가운데 정렬 */
+    .skill-card__media {                 /* 카드의 빈 네모 칸 (카드마다 위치가 달라 변수로 지정) */
+      position: absolute;
+      left: var(--m-left, 8%); top: var(--m-top, 16.6%);
+      width: var(--m-width, 84%); height: var(--m-height, 42.4%);
+      object-fit: cover;
+      background: #000;
+    }
+    .skill-card__frame {
+      position: relative;
+      z-index: 1;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1600px) {
+      :root { --grid-margin: 140px; }
+    }
+    @media (max-width: 1280px) {
+      :root { --grid-margin: 80px; }
+      .header__inner { padding: 0 32px; }
+      .header__games { margin-left: 28px; }
+      .gnb { gap: 34px; }
+    }
+    @media (max-width: 1200px) and (min-width: 1025px) {
+      .header nav { flex: 1; display: flex; justify-content: center; }
+      .gnb { position: relative; left: auto; transform: none; gap: 28px; }
+    }
+
+    @media (max-width: 1024px) {
+      :root { --header-h: 64px; }
+      .header__logo img { width: 104px; }
+      .header__games { display: none; }
+      .menu-toggle { display: block; }
+      .header__util .bar { display: none; }
+      .header__search { margin-right: 16px; }
+
+      .gnb {
+        position: fixed;
+        top: var(--header-h); left: 0; right: 0;
+        transform: none;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(0,0,0,.92);
+        height: auto;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .35s ease;
+      }
+      .gnb > li { display: block; }
+      .gnb__link { display: block; padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 16px; }
+      .gnb__link::after { display: none; }
+      .gnb > li.gnb__games { display: block; }
+
+      /* 로그인·회원가입은 햄버거 메뉴 안으로 */
+      .header__member { display: none; }
+      .gnb > li.gnb__member {
+        display: flex;
+        gap: 10px;
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .gnb__member .btn-line {
+        flex: 1;
+        margin: 0;
+        padding: 11px 0;
+        text-align: center;
+        font-size: 15px;
+      }
+      .header.is-open .gnb { max-height: calc(100vh - var(--header-h)); overflow-y: auto; }
+
+      /* 모바일: 소메뉴는 눌러서 펼치기 */
+      .has-sub > .gnb__link::before {
+        content: '+';
+        position: absolute; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px; color: var(--gray);
+      }
+      .has-sub.is-open > .gnb__link::before { content: '\2212'; color: var(--red); }
+      .gnb__sub {
+        position: static;
+        display: none;
+        opacity: 1; visibility: visible; transform: none;
+        min-width: 0;
+        padding: 6px 0;
+        border-top: 0;
+        background: #111;
+        text-align: left;
+      }
+      .gnb > li:hover .gnb__sub, .gnb > li:focus-within .gnb__sub { transform: none; }
+      .has-sub.is-open .gnb__sub { display: block; }
+      .gnb__sub a { padding: 12px 40px; font-size: 14px; }
+
+      .hero__copy { font-size: 24px; }
+      .hero__title img { width: 440px; }
+      .hero__desc { font-size: 22px; }
+      .hero__start { width: 300px; }
+    }
+
+    @media (max-width: 1100px) and (min-width: 769px) {
+      .quick__list span, .quick__arrow { display: none; }
+    }
+
+    @media (max-width: 1024px) {
+      :root { --grid-margin: 40px; --grid-gutter: 20px; }
+      .update__title { font-size: 56px; }
+      .skill-card--1 { grid-column: 1 / span 6; }
+      .skill-card--2 { grid-column: 7 / span 6; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --section-gap: 120px; --grid-margin: 20px; --grid-gutter: 12px; }
+      .update__badge img { width: 240px; }
+      .update__title { margin-top: 16px; font-size: 40px; }
+      .update__class img { width: 290px; }
+      .skill-card--1, .skill-card--2 { grid-column: 1 / -1; margin-top: 70px; }
+      .skill-card--2 { margin-top: 40px; }
+      .header__inner { padding: 0 16px; }
+
+      .visual { min-height: 760px; }
+      .hero__slide { background-position: 40% center; }
+      .hero__slide--3 { background-position: 22% center; }
+      .hero__copy { font-size: 20px; }
+      .hero__title img { width: 78vw; max-width: 380px; }
+      .hero__desc { font-size: 17px; }
+      .hero__start { width: 240px; margin-top: 30px; }
+      .hero__paging { font-size: 18px; bottom: 44px; }
+
+      /* 모바일: 프레임 대신 2x2 검정띠 */
+      .visual { display: flex; flex-direction: column; }
+      .hero { position: relative; inset: auto; flex: 1; min-height: 0; }
+      .hero__content { padding-bottom: 90px; }
+      .quick {
+        position: static;
+        transform: none;
+        width: auto;
+        aspect-ratio: auto;
+        background: var(--band);
+        pointer-events: auto;
+        flex-shrink: 0;
+      }
+      .quick__list { position: static; display: grid; grid-template-columns: repeat(2, 1fr); padding: 12px 0; }
+      .quick__list li,
+      .quick__list li:nth-child(n) { position: relative; left: auto; top: auto; width: auto; height: auto; }
+      .quick__list li:nth-child(2n)::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #4a4a4a; }
+      .quick__list li:nth-child(n+3) { border-top: 1px solid #333; }
+      .quick__list a { height: 96px; justify-content: flex-start; padding-left: 12%; gap: 12px; }
+      .quick__list img { height: 32px; }
+      .quick__list strong { font-size: 16px; }
+      .quick__list span { font-size: 12px; }
+      .quick__arrow { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .header__search { display: none; }
+      .quick__list a { padding-left: 16px; }
+      .quick__list strong { font-size: 15px; }
+      .quick__list span { font-size: 11px; }
+    }
+
+    /* 세로가 낮은 화면(노트북 등) */
+    @media (max-height: 860px) and (min-width: 769px) {
+      .hero__copy { font-size: 22px; }
+      .hero__title { margin: 4px 0 2px; }
+      .hero__title img { width: 390px; }
+      .hero__desc { font-size: 20px; }
+      .hero__start { width: 260px; margin-top: 20px; }
+      .hero__paging { font-size: 19px; }
+    }
+
+    /* 데스크탑에서는 모바일 전용 메뉴 항목 숨김 */
+    @media (min-width: 1025px) {
+      .gnb > li.gnb__games,
+      .gnb > li.gnb__member { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <h1 class="header__logo">
+        <a href="#"><img src="images/header_logo.png" alt="SOFTON"></a>
+      </h1>
+
+      <div class="header__games">
+        <a href="#">다크에덴</a>
+        <a href="#">다크에덴 오리진</a>
+      </div>
+
+      <nav>
+        <ul class="gnb">
+          <li class="gnb__member">
+            <a href="#" class="btn-line">로그인</a>
+            <a href="#" class="btn-line is-red">회원가입</a>
+          </li>
+          <li class="has-sub">
+            <a href="#" class="gnb__link">다덴소식</a>
+            <ul class="gnb__sub">
+              <li><a href="#">다덴정보</a></li>
+              <li><a href="#">다덴북</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a href="#" class="gnb__link">커뮤니티</a>
+            <ul class="gnb__sub">
+              <li><a href="#">게시판</a></li>
+              <li><a href="#">밸런스 토론장</a></li>
+              <li><a href="#">친구찾기</a></li>
+            </ul>
+          </li>
+          <li><a href="#" class="gnb__link">다덴마켓</a></li>
+          <li class="has-sub">
+            <a href="#" class="gnb__link">고객센터</a>
+            <ul class="gnb__sub">
+              <li><a href="#">이용안내</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">운영정책</a></li>
+              <li><a href="#">1:1 문의</a></li>
+              <li><a href="#">신고센터</a></li>
+              <li><a href="#">명의변경</a></li>
+              <li><a href="#">OTP</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a href="#" class="gnb__link">서포터즈</a>
+            <ul class="gnb__sub">
+              <li><a href="#">테스터신청</a></li>
+              <li><a href="#">의견게시판</a></li>
+              <li><a href="#">다운로드</a></li>
+            </ul>
+          </li>
+          <li class="gnb__games"><a href="#" class="gnb__link">다크에덴</a></li>
+          <li class="gnb__games"><a href="#" class="gnb__link">다크에덴 오리진</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__util">
+        <a href="#" class="header__search" aria-label="검색"><img src="images/main_icon01.png" alt="검색"></a>
+        <span class="bar"></span>
+        <a href="#" class="btn-line header__member">로그인</a>
+        <a href="#" class="btn-line is-red header__member">회원가입</a>
+        <button class="menu-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="visual">
+    <div class="hero">
+      <div class="hero__slides">
+        <div class="hero__slide hero__slide--1 is-active"></div>
+        <div class="hero__slide hero__slide--2"></div>
+        <div class="hero__slide hero__slide--3"></div>
+      </div>
+
+      <div class="hero__content">
+        <p class="hero__copy">다시 <em>피로</em> 쓰여진 세계</p>
+        <h2 class="hero__title">
+          <img src="images/hero_logo.png" alt="다크에덴 REBORN">
+        </h2>
+        <p class="hero__desc">멈추지 않는 전쟁, 진화하는 다크에덴</p>
+        <a href="#" class="hero__start"><img src="images/hero_gamestart.png" alt="GAME START"></a>
+      </div>
+
+      <div class="hero__paging">
+        <span>01</span>
+        <div class="hero__bars">
+          <button class="is-active" aria-label="1번 슬라이드"></button>
+          <button aria-label="2번 슬라이드"></button>
+          <button aria-label="3번 슬라이드"></button>
+        </div>
+        <span>03</span>
+      </div>
+    </div>
+
+    <!-- QUICK MENU -->
+    <nav class="quick" aria-label="바로가기">
+      <ul class="quick__list">
+        <li>
+          <a href="#">
+            <img src="images/main_icon02.png" alt="">
+            <div><strong>게임 다운로드</strong><span>지금 바로 시작하세요</span></div>
+            <i class="quick__arrow" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3"/></svg></i>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="images/main_icon03.png" alt="">
+            <div><strong>신규/복귀 가이드</strong><span>처음이라면 여기서</span></div>
+            <i class="quick__arrow" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3"/></svg></i>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="images/main_icon04.png" alt="">
+            <div><strong>공식 유튜브</strong><span>영상으로 보는 다크에덴</span></div>
+            <i class="quick__arrow" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3"/></svg></i>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="images/main_icon05.png" alt="">
+            <div><strong>고객센터</strong><span>문의 및 이용안내</span></div>
+            <i class="quick__arrow" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3"/></svg></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    </section>
+
+    <!-- UPDATE : 신규 하피 등급 레어 스킬 -->
+    <section class="update">
+      <div class="container">
+        <div class="update__head">
+          <p class="update__badge"><img src="images/main_section01.png" alt="UPDATE 56 개발예정사항"></p>
+          <h2 class="update__title">신규 <em>하피 등급</em><br>레어 스킬</h2>
+          <p class="update__class"><img src="images/main_section02.png" alt="슬레이어"></p>
+        </div>
+
+        <article class="skill-card skill-card--1">
+          <img class="skill-card__media" src="images/Item_01.gif" alt="에테르 슬래셔 스킬 영상">
+          <img class="skill-card__frame" src="images/main_skill01.png"
+               alt="SKILL 01 에테르 슬래셔 - 공간을 베어내는 참격으로 일정 범위 내 적들에게 강력한 피해를 입힙니다. 습득 가능 레벨 401Lv 이상 (하피 1등급) (4차 승직 이상)">
+        </article>
+
+        <article class="skill-card skill-card--2" style="--m-left: 8.2%; --m-top: 14.3%; --m-width: 83.6%; --m-height: 42.3%;">
+          <img class="skill-card__media" src="images/Item_02.gif" alt="템페스트 스톰 스킬 영상">
+          <img class="skill-card__frame" src="images/main_skill02.png"
+               alt="SKILL 02 템페스트 스톰 - 검에 깃든 번개의 힘을 방출하여 전격의 폭풍을 일으키며, 천둥을 동반한 폭풍이 일정 범위 내 적에게 강력한 피해를 입힙니다. 습득 가능 레벨 401Lv 이상 (하피 1등급) (4차 승직 이상)">
+        </article>
+      </div>
+    </section>
+
+    <!-- 다음 섹션은 여기부터 추가하면 자동으로 200px 간격이 적용됩니다 -->
+  </main>
+
+  <script>
+    // 모바일 메뉴
+    const header = document.getElementById('header');
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      header.classList.toggle('is-open');
+    });
+
+    // 모바일에서는 상위 메뉴를 누르면 소메뉴가 펼쳐짐
+    const mq = window.matchMedia('(max-width: 1024px)');
+    document.querySelectorAll('.has-sub > .gnb__link').forEach(link => {
+      link.addEventListener('click', e => {
+        if (!mq.matches) return;
+        e.preventDefault();
+        const li = link.parentElement;
+        const open = li.classList.contains('is-open');
+        document.querySelectorAll('.has-sub.is-open').forEach(el => el.classList.remove('is-open'));
+        if (!open) li.classList.add('is-open');
+      });
+    });
+
+    // 히어로 슬라이드 + 페이지네이션 (현재 화면만 #980000, 나머지 #C3C3C3)
+    const slides = document.querySelectorAll('.hero__slide');
+    const bars = document.querySelectorAll('.hero__bars button');
+    let current = 0, timer;
+
+    function go(i) {
+      slides[current].classList.remove('is-active');
+      bars[current].classList.remove('is-active');
+      current = i;
+      slides[current].classList.add('is-active');
+      bars[current].classList.add('is-active');
+    }
+    function autoplay() {
+      clearInterval(timer);
+      timer = setInterval(() => go((current + 1) % slides.length), 5000);
+    }
+    bars.forEach((b, i) => b.addEventListener('click', () => { go(i); autoplay(); }));
+    autoplay();
+  </script>
+</body>
+</html>
