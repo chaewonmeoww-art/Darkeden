@@ -1,0 +1,97 @@
+/* =========================================================
+   Sword Cursor — 독립 커서 컴포넌트 (CSS)
+   - 수치/색상은 sword-cursor.js 의 CONFIG 에서 CSS 변수로 주입됩니다.
+   - 아래 var(...) 의 두 번째 값은 JS 가 없을 때의 기본값입니다.
+   ========================================================= */
+
+/* 커서가 활성화되었을 때만 기본 포인터 숨김 */
+html.sc-active,
+html.sc-active * {
+  cursor: none !important;
+}
+
+/* 텍스트 입력 영역은 일반 텍스트 커서 유지 */
+html.sc-active input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="image"]),
+html.sc-active textarea,
+html.sc-active [contenteditable=""],
+html.sc-active [contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* ---------- 레이어 ---------- */
+.sc-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  contain: strict;
+}
+.sc-fx {                       /* 잔상 · 스파크 · 베기 궤적용 캔버스 */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 커서 위치(JS 가 transform 으로 이동) */
+.sc-cursor {
+  position: absolute;
+  top: 0; left: 0;
+  width: var(--sc-w, 29px);
+  height: var(--sc-h, 32px);
+  will-change: transform;
+  transition: opacity .15s ease;
+}
+.sc-root.is-hidden .sc-cursor { opacity: 0; }
+
+/* 검 본체: 확대/찌르기는 검 끝(=클릭 지점)을 기준으로 */
+.sc-sword {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: var(--sc-tip-x, 99%) var(--sc-tip-y, 0%);
+  transform: translate(0, 0) scale(1);
+  transition: transform .14s cubic-bezier(.2, .8, .2, 1);
+  filter: drop-shadow(0 0 var(--sc-glow-idle-blur, 2px) var(--sc-glow-idle, rgba(110, 0, 0, .55)));
+}
+.sc-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- Hover ---------- */
+.sc-root.is-hover .sc-sword {
+  transform: scale(var(--sc-hover-scale, 1.12));
+  filter:
+    brightness(1.08)
+    drop-shadow(0 0 var(--sc-glow-hover-blur, 4px) var(--sc-glow-hover, rgba(200, 10, 10, .75)));
+}
+.sc-root.is-hover-enter .sc-img {
+  animation: sc-flash var(--sc-shine-dur, 320ms) ease-out;
+}
+/* 검날 은색 부분이 순간적으로 번쩍 */
+@keyframes sc-flash {
+  0%   { filter: brightness(1); }
+  30%  { filter: brightness(var(--sc-flash, 1.75)) contrast(1.1); }
+  100% { filter: brightness(1); }
+}
+
+/* ---------- Click (검 끝 방향으로 짧게 찌르기) ---------- */
+.sc-root.is-click .sc-sword {
+  animation: sc-thrust var(--sc-click-dur, 220ms) cubic-bezier(.2, .9, .3, 1);
+}
+@keyframes sc-thrust {
+  0%   { transform: translate(0, 0) scale(var(--sc-cur-scale, 1)); }
+  35%  { transform: translate(var(--sc-thrust-x, 4px), var(--sc-thrust-y, -5px)) scale(calc(var(--sc-cur-scale, 1) * .96)); }
+  100% { transform: translate(0, 0) scale(var(--sc-cur-scale, 1)); }
+}
+
+/* 움직임 최소화 설정 사용자는 애니메이션 생략 */
+@media (prefers-reduced-motion: reduce) {
+  .sc-sword { transition: none; }
+  .sc-root.is-click .sc-sword,
+  .sc-root.is-hover-enter .sc-img { animation: none; }
+}
