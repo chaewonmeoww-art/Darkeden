@@ -7,51 +7,82 @@
 (function () {
   'use strict';
 
+  /* ═════════════ 여기 값만 바꾸면 됩니다 ═════════════ */
+  const CURSOR_IMAGE       = 'cursor/sword.png'; // 칼 이미지 (투명 PNG) — 모양은 이 파일 그대로 사용
+  const CURSOR_SIZE        = 42;         // 칼 이미지 세로 크기(px). 이전 32 → 약 1.3배
+  const CURSOR_HOVER_SCALE = 1.12;       // Hover 시 확대 비율 (1.10 ~ 1.15)
+  const OUTLINE_COLOR      = '#FFFFFF';  // 칼 주변 흰색 그림자(drop-shadow) 색
+  const OUTLINE_OPACITY    = .6;         // 흰색 그림자 진하기 (0 ~ 1)
+  const OUTLINE_BLUR       = 2;          // 흰색 그림자 번짐(px) — 클수록 부드러움
+  const GLOW_COLOR         = '#D90000';  // 칼 바깥 붉은 빛 색
+  const GLOW_INTENSITY     = 1;          // 빛 세기 (0 = 없음, 1 = 기본, 2 = 강하게)
+  const TRAIL_COUNT        = 3;          // 이동 잔상 최대 개수 (2 ~ 3)
+  const TRAIL_DURATION     = 200;        // 잔상이 사라지는 시간(ms) (150 ~ 250)
+  const CLICK_DURATION     = 250;        // 클릭 베기 효과 전체 시간(ms) (200 ~ 300)
+  /* ═══════════════════════════════════════════════════ */
+
+  const hexRgb = hex => {
+    const h = hex.replace('#', '');
+    const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255].join(', ');
+  };
+  const GLOW_RGB = hexRgb(GLOW_COLOR);
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+
   /* ───────────────────────── CONFIG ───────────────────────── */
   const CONFIG = {
-    image: 'cursor/sword.png',   // 검 이미지 (투명 PNG)
-    size: 32,                    // 화면에 보이는 검의 세로 크기(px) — 28~34 권장
-    tip: { x: 0.99, y: 0.004 },  // 이미지 안에서 검 끝 위치(0~1) = 클릭 지점(Hotspot)
-    bladeAngle: -50,             // 손잡이 → 검 끝 방향(도). 0=오른쪽, -90=위쪽
+    image: CURSOR_IMAGE,
+    size: CURSOR_SIZE,
+    tip: { x: 0.99, y: 0.004 },  // 이미지 안에서 칼끝 위치(0~1) = 실제 클릭 지점(Hotspot)
+    bladeAngle: -50,             // 손잡이 → 칼끝 방향(도). 0=오른쪽, -90=위쪽
 
-    color: {
-      glowIdle:  'rgba(110, 0, 0, .55)',   // 기본 상태 글로우 (아주 은은하게)
-      glowHover: 'rgba(200, 10, 10, .75)', // Hover 글로우
-      trail:     '150, 0, 0',              // 잔상 색 (r, g, b)
-      sparks:    ['255, 80, 50', '220, 20, 20', '255, 150, 110'], // 스파크 색
-      slashEdge: '152, 0, 0',              // 베기 궤적 바깥색 (#980000)
-      slashCore: '255, 190, 170'           // 베기 궤적 중심 하이라이트
+    outline: {                  // 딱딱한 테두리 대신 흰색 drop-shadow 로 표현
+      color: OUTLINE_COLOR,
+      opacity: OUTLINE_OPACITY,
+      blur: OUTLINE_BLUR,
+      hoverOpacity: Math.min(1, OUTLINE_OPACITY + .25),
+      width: 0, hoverWidth: 0   // (그려진 외곽선은 사용하지 않음)
     },
 
-    glow:  { idleBlur: 2, hoverBlur: 4 },          // 글로우 번짐(px)
+    color: {
+      glowIdle:  'rgba(' + GLOW_RGB + ', ' + clamp01(.55 * GLOW_INTENSITY) + ')',
+      glowHover: 'rgba(' + GLOW_RGB + ', ' + clamp01(.9 * GLOW_INTENSITY) + ')',
+      trail:     GLOW_RGB,                 // 잔상 색 (r, g, b)
+      sparks:    ['255, 70, 40', GLOW_RGB, '255, 140, 100'], // 스파크 색
+      slashEdge: GLOW_RGB,                 // 베기 궤적 바깥색
+      slashCore: '255, 200, 185'           // 베기 궤적 중심 하이라이트
+    },
+
+    glow: { idleBlur: 3 * GLOW_INTENSITY, hoverBlur: 6 * GLOW_INTENSITY }, // 빛 번짐(px)
 
     trail: {
-      max: 3,               // 동시에 남는 잔상 최대 개수
-      life: 200,            // 잔상 지속시간(ms) — 150~250
-      spawnDistance: 16,    // 이만큼(px) 움직일 때마다 잔상 1개
-      spawnInterval: 40,    // 잔상 생성 최소 간격(ms)
-      opacity: .38          // 잔상 시작 투명도
+      max: TRAIL_COUNT,
+      life: TRAIL_DURATION,
+      spawnDistance: 18,    // 이만큼(px) 움직일 때마다 잔상 1개
+      spawnInterval: 45,    // 잔상 생성 최소 간격(ms)
+      opacity: .45,         // 잔상 시작 투명도 (붉은 빛 + 아주 약한 칼날 형태)
+      blur: 1.6             // 잔상 번짐(px) — 칼 실루엣이 또렷하게 반복되지 않도록
     },
 
     hover: {
-      scale: 1.12,          // 확대 비율 (1.10~1.15)
+      scale: CURSOR_HOVER_SCALE,
       sparks: [1, 2],       // 나타나는 스파크 개수 [최소, 최대]
-      flash: 1.75,          // 검날이 번쩍이는 밝기 (1 = 변화 없음)
-      shineDuration: 320    // 번쩍임 시간(ms)
+      flash: 1.45,          // Hover 순간 칼날이 밝아지는 정도
+      shineDuration: 180    // Hover 전환 시간(ms)
     },
 
     click: {
-      duration: 230,        // 찌르기 전체 시간(ms)
+      duration: CLICK_DURATION,
       thrust: 6,            // 앞으로 나가는 거리(px)
       sparks: [3, 5],       // 튀는 파편 개수 [최소, 최대]
-      slashLength: 46,      // 베기 궤적 길이(px)
+      slashLength: 52,      // 베기 궤적 길이(px)
       slashWidth: 5,        // 베기 궤적 두께(px)
-      slashLife: 250        // 베기 궤적 지속시간(ms)
+      slashLife: CLICK_DURATION
     },
 
     // 자동으로 '클릭 가능'으로 인식할 요소
     clickable: [
-      'a[href]', 'button', 'summary', 'select', 'label[for]',
+      'a[href]', 'button', 'summary', 'label[for]',
       '[role="button"]', '[role="link"]', '[role="tab"]', '[onclick]',
       'input[type="button"]', 'input[type="submit"]', 'input[type="reset"]',
       'input[type="checkbox"]', 'input[type="radio"]', 'input[type="image"]',
@@ -59,10 +90,10 @@
       '[class*="card"]', '[data-cursor="hover"]'
     ].join(','),
 
-    // 텍스트 커서를 그대로 쓸 요소 (검 커서는 잠시 숨김)
+    // 기본 시스템 커서를 그대로 쓸 요소 (칼 커서는 잠시 숨김)
     text: [
       'input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="image"])',
-      'textarea', '[contenteditable=""]', '[contenteditable="true"]'
+      'textarea', 'select', '[contenteditable=""]', '[contenteditable="true"]'
     ].join(','),
 
     // 이 속성이 있는 영역에서는 커스텀 커서를 끔
@@ -88,12 +119,14 @@
   root.innerHTML =
     '<canvas class="sc-fx"></canvas>' +
     '<div class="sc-cursor"><div class="sc-sword">' +
-      '<img class="sc-img" alt="" draggable="false">' +
+      '<canvas class="sc-img sc-img--base"></canvas>' +
+      '<canvas class="sc-img sc-img--hover"></canvas>' +
     '</div></div>';
   const canvas = root.querySelector('.sc-fx');
   const ctx = canvas.getContext('2d');
   const cursorEl = root.querySelector('.sc-cursor');
-  const imgEl = root.querySelector('.sc-img');
+  const baseEl = root.querySelector('.sc-img--base');
+  const hoverEl = root.querySelector('.sc-img--hover');
 
   /* ---------- 상태 ---------- */
   const S = {
@@ -112,9 +145,11 @@
     S.w = Math.round(CONFIG.size * img.naturalWidth / img.naturalHeight);
     S.tipX = S.w * CONFIG.tip.x;
     S.tipY = S.h * CONFIG.tip.y;
+    S.pad = Math.ceil(CONFIG.outline.hoverWidth + 1);
     applyCssVars();
     ghostSprite = makeGhostSprite(img);
-    imgEl.src = CONFIG.image;
+    drawOutlined(baseEl, img, 0, 0);
+    drawOutlined(hoverEl, img, 0, 0);
     document.body.appendChild(root);
     document.documentElement.classList.add('sc-active');
     resize();
@@ -126,6 +161,11 @@
     const c = CONFIG, st = root.style;
     st.setProperty('--sc-w', S.w + 'px');
     st.setProperty('--sc-h', S.h + 'px');
+    st.setProperty('--sc-pad', S.pad + 'px');
+    const wr = hexRgb(c.outline.color);
+    st.setProperty('--sc-shadow', 'rgba(' + wr + ', ' + c.outline.opacity + ')');
+    st.setProperty('--sc-shadow-hover', 'rgba(' + wr + ', ' + c.outline.hoverOpacity + ')');
+    st.setProperty('--sc-shadow-blur', c.outline.blur + 'px');
     st.setProperty('--sc-tip-x', (c.tip.x * 100) + '%');
     st.setProperty('--sc-tip-y', (c.tip.y * 100) + '%');
     st.setProperty('--sc-glow-idle', c.color.glowIdle);
@@ -141,17 +181,55 @@
     st.setProperty('--sc-cur-scale', 1);
   }
 
-  // 검 모양 그대로 붉게 물들인 실루엣 (잔상용)
+  // 원본 칼 이미지 + 칼 실루엣을 정확히 따라가는 얇은 외곽선
+  // (칼 자체는 칠하지 않고, 실루엣을 사방으로 조금씩 밀어 만든 테두리 위에 원본을 그대로 올림)
+  function drawOutlined(canvasEl, source, width, opacity) {
+    const k = Math.max(2, window.devicePixelRatio || 1);   // 선명도용 배율
+    const pad = S.pad;
+    const W = S.w + pad * 2, H = S.h + pad * 2;
+    canvasEl.width = Math.round(W * k);
+    canvasEl.height = Math.round(H * k);
+    const g = canvasEl.getContext('2d');
+    g.setTransform(k, 0, 0, k, 0, 0);
+
+    // 외곽선용 실루엣
+    const sil = document.createElement('canvas');
+    sil.width = canvasEl.width; sil.height = canvasEl.height;
+    const sg = sil.getContext('2d');
+    sg.setTransform(k, 0, 0, k, 0, 0);
+    sg.drawImage(source, pad, pad, S.w, S.h);
+    sg.globalCompositeOperation = 'source-in';
+    sg.fillStyle = CONFIG.outline.color;
+    sg.fillRect(0, 0, W, H);
+
+    g.globalAlpha = opacity;
+    const steps = width > 0 ? 24 : 0;
+    for (let i = 0; i < steps; i++) {
+      const a = (i / steps) * Math.PI * 2;
+      g.drawImage(sil, Math.cos(a) * width, Math.sin(a) * width, W, H);
+    }
+    g.globalAlpha = 1;
+    g.drawImage(source, pad, pad, S.w, S.h);   // 원본 칼 (은색/검은색 금속 질감 그대로)
+  }
+
+  // 잔상용: 붉은 빛 + 아주 약한 칼날 형태 (흐리게 번진 붉은 실루엣)
   function makeGhostSprite(source) {
-    const k = 2; // 선명도용 배율
+    const k = Math.max(2, window.devicePixelRatio || 1);
+    const pad = 6;
     const c = document.createElement('canvas');
-    c.width = S.w * k * (window.devicePixelRatio || 1);
-    c.height = S.h * k * (window.devicePixelRatio || 1);
+    c.width = (S.w + pad * 2) * k;
+    c.height = (S.h + pad * 2) * k;
+    const tmp = document.createElement('canvas');
+    tmp.width = c.width; tmp.height = c.height;
+    const t = tmp.getContext('2d');
+    t.drawImage(source, pad * k, pad * k, S.w * k, S.h * k);
+    t.globalCompositeOperation = 'source-in';
+    t.fillStyle = 'rgb(' + CONFIG.color.trail + ')';
+    t.fillRect(0, 0, c.width, c.height);
     const g = c.getContext('2d');
-    g.drawImage(source, 0, 0, c.width, c.height);
-    g.globalCompositeOperation = 'source-atop';
-    g.fillStyle = 'rgba(' + CONFIG.color.trail + ', .9)';
-    g.fillRect(0, 0, c.width, c.height);
+    g.filter = 'blur(' + (CONFIG.trail.blur * k) + 'px)';
+    g.drawImage(tmp, 0, 0);
+    c.pad = pad;
     return c;
   }
 
@@ -315,9 +393,10 @@
       g.age += dt;
       const p = g.age / t.life;
       if (p >= 1) { S.ghosts.splice(i, 1); continue; }
-      const w = S.w * g.scale, h = S.h * g.scale;
+      const pd = ghostSprite.pad * g.scale;
+      const w = (S.w + ghostSprite.pad * 2) * g.scale, h = (S.h + ghostSprite.pad * 2) * g.scale;
       ctx.globalAlpha = t.opacity * Math.pow(1 - p, 1.6);
-      ctx.drawImage(ghostSprite, g.x - S.tipX * g.scale, g.y - S.tipY * g.scale, w, h);
+      ctx.drawImage(ghostSprite, g.x - S.tipX * g.scale - pd, g.y - S.tipY * g.scale - pd, w, h);
     }
     ctx.globalAlpha = 1;
   }
