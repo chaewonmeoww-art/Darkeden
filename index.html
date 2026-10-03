@@ -215,20 +215,31 @@
       background: rgba(255,255,255,.5);
       margin: 0 14px 0 18px;
     }
+    /* 로그인(회색) · 회원가입(붉은색) 버튼: 프레임 이미지 */
     .btn-line {
-      display: inline-block;
-      padding: 3px 9px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 38px;
+      aspect-ratio: 931 / 291;
       font-size: 14px;
-      border: 1px solid var(--white);
-      line-height: 1.3;
+      color: #e6e6e6;
       white-space: nowrap;
-      transition: background .2s, color .2s;
+      background: url('images/btn_login.png') center / 100% 100% no-repeat;
+      transition: filter .2s ease, color .2s ease, transform .2s ease;
     }
-    .btn-line + .btn-line { margin-left: 18px; }
-    .btn-line:hover { background: var(--white); color: #000; }
-    /* 회원가입: 붉은 배경으로 눈에 띄게 */
-    .btn-line.is-red { border-color: var(--red); background: var(--red); color: var(--white); }
-    .btn-line.is-red:hover { border-color: #c40000; background: #c40000; color: var(--white); }
+    /* 회원가입 이미지는 바깥 장식(가시)이 커서 같은 높이면 본체가 작아 보임
+       → 본체 크기가 로그인과 같아지도록 약 1.16배 크게 */
+    .btn-line.is-red {
+      height: 44px;
+      margin-top: -3px; margin-bottom: -3px;
+      aspect-ratio: 1130 / 359;
+      color: #fff;
+      background-image: url('images/btn_signup.png');
+    }
+    .btn-line + .btn-line { margin-left: 10px; }
+    .btn-line:hover { color: #fff; filter: brightness(1.2); }
+    .btn-line.is-red:hover { filter: brightness(1.15) drop-shadow(0 0 8px rgba(255, 40, 40, .55)); }
 
     .menu-toggle { display: none; width: 28px; height: 20px; position: relative; margin-left: 16px; }
     .menu-toggle span {
@@ -422,6 +433,14 @@
     }
     /* 위쪽 하늘 부분만 윗섹션 색에서 서서히 이어지게 (이미지는 자르지 않음) */
     main > section.section02 { position: relative; }
+    /* 아래쪽도 다음 섹션 색으로 서서히 이어지게 */
+    main > section.section02::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 18%;
+      pointer-events: none;
+      background: linear-gradient(0deg, #080000, rgba(8, 0, 0, 0));
+    }
     main > section.section02::before {
       content: '';
       position: absolute; left: 0; right: 0; top: 0;
@@ -689,6 +708,472 @@
       .news__date { display: none; }
     }
 
+    /* ================= 다덴 소식 아래 배너 ================= */
+    .main-banner {
+      grid-column: 1 / -1;
+      display: block;
+      margin-top: var(--section-gap);     /* 섹션 간격 150px */
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1), filter .35s ease;
+    }
+    .main-banner img { width: 100%; }
+    .main-banner:hover {
+      transform: translateY(-4px);
+      filter: brightness(1.08) drop-shadow(0 0 18px rgba(200, 0, 0, .45));
+    }
+
+    /* ================= 다덴 BOOK ================= */
+    .book { background: #080000; }
+    .book__head { grid-column: 1 / -1; }
+    .book__eyebrow {
+      font-family: 'Ridibatang', serif;
+      font-size: 15px;
+      letter-spacing: 5px;
+      color: #8d8d8d;
+    }
+    .book__title {
+      margin-top: 6px;
+      font-family: 'HeirofLight', 'Ridibatang', serif;
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 1.15;
+      letter-spacing: -1px;
+    }
+    .book__title em {
+      font-style: normal;
+      font-family: 'Ridibatang', serif;
+      color: #c41414;
+      text-shadow: 0 0 18px rgba(200, 0, 0, .35);
+    }
+    .book__desc {
+      margin-top: 12px;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 17px;
+      color: #bdbdbd;
+    }
+
+    /* 왼쪽 메뉴 (2칸) */
+    .book__nav {
+      grid-column: 1 / span 2;
+      margin-top: 50px;
+      padding-top: 30px;
+      font-family: 'Pretendard', sans-serif;
+    }
+    .book__nav ul { border-bottom: 1px solid rgba(255, 255, 255, .1); padding-bottom: 20px; }
+    .book__nav a {
+      position: relative;
+      display: block;
+      padding: 18px 0 18px 0;
+      font-size: 18px;
+      color: #d8d8d8;
+      transition: color .25s, padding-left .25s;
+    }
+    .book__nav a::after {                       /* 아래 붉은 선 */
+      content: '';
+      position: absolute; left: 0; bottom: 8px;
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, #c41414, rgba(196, 20, 20, 0));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s ease;
+    }
+    .book__nav a::before {                      /* 왼쪽 붉은 점 */
+      content: '';
+      position: absolute; left: -16px; top: 50%;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #e01515;
+      box-shadow: 0 0 8px #ff2020;
+      transform: translateY(-50%) scale(0);
+      transition: transform .25s ease;
+    }
+    .book__nav a.is-active,
+    .book__nav a:hover { color: #e01818; padding-left: 4px; }
+    .book__nav a.is-active::after,
+    .book__nav a:hover::after { transform: scaleX(1); }
+    .book__nav a.is-active::before,
+    .book__nav a:hover::before { transform: translateY(-50%) scale(1); }
+    .book__nav-foot {
+      margin-top: 22px;
+      font-family: 'Ridibatang', serif;
+      font-size: 12px;
+      line-height: 1.6;
+      letter-spacing: 2px;
+      color: #6f6f6f;
+    }
+
+    /* 카드 (3~8칸) — 오른쪽 9~12칸은 추가 콘텐츠용으로 비워둠 */
+    .book__cards {
+      grid-column: 3 / span 6;
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid-gutter);
+    }
+    .book-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      aspect-ratio: 5 / 4;
+      padding: 30px 32px 34px;
+      overflow: hidden;
+      isolation: isolate;
+      font-family: 'Pretendard', sans-serif;
+      background: #120000;
+    }
+    .book-card--main {
+      grid-column: 1 / -1;
+      aspect-ratio: auto;
+      height: clamp(280px, 22vw, 420px);
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .book-card__img {
+      position: absolute; inset: 0;
+      z-index: -2;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .9s cubic-bezier(.2, .8, .2, 1), filter .5s ease;
+      filter: brightness(.8);
+    }
+    .book-card::before {                         /* 글자 쪽 어둡게 */
+      content: '';
+      position: absolute; inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(8,0,0,.05) 20%, rgba(8,0,0,.7) 55%, rgba(8,0,0,.92) 100%);
+    }
+    .book-card--main::before {
+      background: linear-gradient(90deg, rgba(8,0,0,0) 45%, rgba(8,0,0,.75) 75%, rgba(8,0,0,.85) 100%);
+    }
+    .book-card::after {                          /* 금빛 테두리 프레임 — 카드 가장자리에 꽉 차게 */
+      content: '';
+      position: absolute;
+      /* book_border.png 의 투명 여백(좌우 19px, 위 22px, 아래 33px)을 바깥으로 밀어내 테두리가 카드 끝에 닿도록 */
+      top: -3.4%; bottom: -5.1%; left: -1.872%; right: -1.872%;
+      pointer-events: none;
+      background: url('images/book_border.png') center / 100% 100% no-repeat;
+      opacity: .8;
+      transition: opacity .4s ease, filter .4s ease;
+    }
+    .book-card:hover .book-card__img { transform: scale(1.06); filter: brightness(.95); }
+    .book-card:hover::after { opacity: 1; filter: drop-shadow(0 0 6px rgba(220, 40, 40, .7)); }
+
+    .book-card__body { position: relative; }
+    .book-card--main .book-card__body {
+      width: min(380px, 42%);
+      margin-right: 3%;
+      padding: 30px 32px;
+      background: rgba(10, 2, 2, .55);
+      border: 1px solid rgba(255, 255, 255, .08);
+      backdrop-filter: blur(2px);
+    }
+    .book-card__num {
+      font-family: 'Ridibatang', serif;
+      font-size: 24px;
+      color: #d11a1a;
+    }
+    .book-card__title {
+      margin-top: 4px;
+      font-family: 'HeirofLight', 'Ridibatang', serif;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: -.5px;
+    }
+    .book-card--main .book-card__title { font-size: 34px; }
+    .book-card__text {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #c9c9c9;
+    }
+    .book-card .more-link {
+      margin-top: 22px;
+      padding-bottom: 6px;
+      font-family: 'Ridibatang', serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #d0d0d0;
+    }
+    .book-card:hover .more-link { color: #fff; }
+    .book-card:hover .more-link::after { transform: scaleX(1); }
+    .book-card:hover .more-link__arrow { transform: translateX(4px); text-shadow: 0 0 8px rgba(255, 30, 30, .9); }
+
+    /* ===== 오른쪽: 다덴 RANKING (9~12칸) ===== */
+    .book__head  { grid-row: 1; grid-column: 1 / span 8; }
+    .book__nav   { grid-row: 2; }
+    .book__cards { grid-row: 2; }
+    .book__side {
+      grid-column: 9 / -1;
+      grid-row: 1 / span 2;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Pretendard', sans-serif;
+    }
+    .rank__head { padding-top: 46px; }
+    .rank__title {
+      font-family: 'HeirofLight', 'Ridibatang', serif;
+      font-weight: 400;
+      font-size: 44px;
+      line-height: 1.15;
+      letter-spacing: -1px;
+    }
+    .rank__title em {
+      font-style: normal;
+      font-family: 'Ridibatang', serif;
+      color: #c41414;
+      text-shadow: 0 0 18px rgba(200, 0, 0, .35);
+    }
+    .rank__sub {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .rank__desc { font-size: 15px; color: #bdbdbd; }
+    .rank__more { padding-bottom: 6px; font-size: 15px; white-space: nowrap; }
+
+    .rank__panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin-top: 26px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: linear-gradient(180deg, rgba(20, 4, 4, .85), rgba(8, 0, 0, .9));
+    }
+    .rank__tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+    .rank__tab {
+      position: relative;
+      height: 48px;
+      font-size: 14px;
+      color: #cfcfcf;
+      transition: color .3s ease;
+    }
+    .rank__tab + .rank__tab { border-left: 1px solid rgba(255, 255, 255, .06); }
+    .rank__tab::before {                         /* 선택 시 붉게 빛나는 배경이 부드럽게 */
+      content: '';
+      position: absolute; inset: 0;
+      z-index: -1;
+      border: 1px solid #c21a1a;
+      background:
+        radial-gradient(ellipse 70% 90% at 50% 50%, rgba(220, 20, 20, .5), transparent 75%),
+        linear-gradient(180deg, #6e0000, #2e0000);
+      box-shadow: 0 0 16px rgba(200, 0, 0, .45), inset 0 0 10px rgba(255, 60, 60, .2);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .rank__tab { isolation: isolate; }
+    .rank__tab:hover { color: #fff; }
+    .rank__tab.is-active { color: #fff; }
+    .rank__tab.is-active::before { opacity: 1; }
+
+    .rank__table {
+      flex: 1;
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 15px;
+    }
+    .rank__table th {
+      height: 44px;
+      font-size: 13px;
+      font-weight: 400;
+      color: #8a8a8a;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+    .rank__table td {
+      height: 54px;
+      color: #e6e6e6;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+    .rank__table tr:last-child td { border-bottom: 0; }
+    .rank__table tbody tr { transition: background .2s; }
+    .rank__table tbody tr:hover { background: rgba(152, 0, 0, .14); }
+    .rank__table tbody.is-entering tr { animation: news-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+    .rank__table tbody.is-entering tr:nth-child(2) { animation-delay: .04s; }
+    .rank__table tbody.is-entering tr:nth-child(3) { animation-delay: .08s; }
+    .rank__table tbody.is-entering tr:nth-child(4) { animation-delay: .12s; }
+    .rank__table tbody.is-entering tr:nth-child(5) { animation-delay: .16s; }
+    .rank__num { color: #d9a65a; }
+    /* 1~3위 메달 */
+    .rank__medal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      font-family: 'Ridibatang', serif;
+      font-size: 15px;
+      color: #1a0d00;
+      box-shadow: 0 0 0 2px rgba(0,0,0,.5), 0 0 10px rgba(0,0,0,.6);
+    }
+    .rank__medal--1 { background: radial-gradient(circle at 35% 30%, #fff1b8, #e0a92f 45%, #7a4d09 100%); box-shadow: 0 0 0 2px #5a3a06, 0 0 12px rgba(240, 180, 60, .45); }
+    .rank__medal--2 { background: radial-gradient(circle at 35% 30%, #ffffff, #b9bec6 45%, #4d525a 100%); box-shadow: 0 0 0 2px #3a3d42, 0 0 10px rgba(200, 210, 220, .3); }
+    .rank__medal--3 { background: radial-gradient(circle at 35% 30%, #ffd9b0, #c27834 45%, #5a2c0a 100%); box-shadow: 0 0 0 2px #4a2408, 0 0 10px rgba(210, 120, 50, .35); }
+    /* 종족 · 길드 아이콘 */
+    .rank__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      vertical-align: middle;
+    }
+    .rank__icon svg { width: 100%; height: 100%; }
+    .rank__guild {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      border: 1px solid #5a4630;
+      background: linear-gradient(180deg, #2a1a10, #120806);
+      vertical-align: middle;
+    }
+    .rank__guild svg { width: 18px; height: 18px; }
+    .rank__name { font-weight: 500; }
+    /* 좁아진 카드에 맞춰 글자 크기 조정 */
+    .book__cards .book-card:not(.book-card--main) { aspect-ratio: 3 / 4; padding: 22px 22px 28px; }
+    .book__cards .book-card:not(.book-card--main) .book-card__num { font-size: 18px; }
+    .book__cards .book-card:not(.book-card--main) .book-card__title { font-size: 20px; }
+    .book__cards .book-card:not(.book-card--main) .book-card__text { font-size: 13px; }
+    .book__cards .book-card:not(.book-card--main) .more-link { margin-top: 14px; font-size: 13px; }
+    .book-card--main .book-card__body { width: min(340px, 50%); padding: 24px 26px; }
+    .book-card--main .book-card__title { font-size: 28px; white-space: nowrap; }
+
+    @media (max-width: 1600px) {
+      .book-card { padding: 24px 32px 30px; }
+      .book-card__title { font-size: 24px; }
+      .book-card__text { font-size: 14px; }
+    }
+    @media (max-width: 1280px) {
+      .book__nav { grid-column: 1 / -1; padding-top: 0; }
+      .book__nav ul { display: flex; gap: 28px; flex-wrap: wrap; }
+      .book__nav a::before { display: none; }
+      .book__nav-foot { display: none; }
+      .book__cards { grid-column: 1 / -1; margin-top: 20px; }
+      .book__head, .book__nav, .book__cards, .book__side { grid-row: auto; }
+      .book__head { grid-column: 1 / -1; }
+      .book__side { grid-column: 1 / -1; margin-top: 80px; }
+      .rank__head { padding-top: 0; }
+      .rank__table { min-height: 320px; }
+      .book__cards .book-card:not(.book-card--main) { aspect-ratio: 5 / 4; }
+    }
+    @media (max-width: 768px) {
+      .rank__title { font-size: 32px; }
+      .rank__sub { flex-direction: column; align-items: flex-start; }
+      .rank__more { align-self: flex-end; }
+      .rank__tab { font-size: 12px; }
+      .rank__table { font-size: 14px; }
+      .rank__table th:nth-child(3), .rank__table td:nth-child(3) { display: none; }
+      .book__title { font-size: 42px; }
+      .book__desc { font-size: 15px; }
+      .book__nav ul { gap: 18px; }
+      .book__nav a { font-size: 15px; }
+      .book__cards { grid-template-columns: 1fr; }
+      .book-card { aspect-ratio: 4 / 3; padding: 30px 40px 40px; }
+      .book-card--main { height: auto; aspect-ratio: 4 / 5; align-items: stretch; justify-content: flex-end; }
+      .book-card--main::before { background: linear-gradient(180deg, rgba(8,0,0,0) 35%, rgba(8,0,0,.9) 100%); }
+      .book-card--main .book-card__body { width: auto; margin: 0; padding: 0; background: none; border: 0; backdrop-filter: none; }
+      .book-card--main .book-card__title { font-size: 28px; }
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      position: relative;
+      padding: 56px 0 60px;
+      background: #0d0707;
+      border-top: 1px solid rgba(152, 0, 0, .45);
+      font-family: 'Pretendard', sans-serif;
+      color: #8f8f8f;
+    }
+    .footer::before {                         /* 위쪽 경계에 은은한 붉은 빛 */
+      content: '';
+      position: absolute; left: 0; right: 0; top: -1px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c41414 50%, transparent);
+      box-shadow: 0 0 14px rgba(200, 0, 0, .6);
+    }
+    .footer .container { align-items: center; row-gap: 32px; }
+    .footer__logo { grid-column: 1 / span 2; }
+    .footer__logo img { width: 150px; filter: grayscale(1) brightness(1.4); opacity: .55; }
+    .footer__info { grid-column: 3 / span 6; overflow: hidden; }
+    .footer__links { display: flex; flex-wrap: wrap; row-gap: 6px; font-size: 13.5px; margin-left: -19px; }
+    /* 줄 맨 앞에 오는 구분선은 바깥으로 밀려나 잘림 */
+    .footer__links li { white-space: nowrap; }
+    .footer__links li::before {
+      content: '';
+      display: inline-block;
+      width: 1px; height: 11px;
+      margin: 0 9px;
+      background: #4a4a4a;
+      vertical-align: -1px;
+    }
+    .footer__links a { color: #b5b5b5; transition: color .2s; }
+    .footer__links a:hover { color: #fff; }
+    .footer__links a.is-strong { color: #e02020; font-weight: 600; }
+    .footer__links a.is-strong:hover { color: #ff4a4a; }
+    .footer__text {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      font-size: 13px;
+      line-height: 1.85;
+      font-style: normal;
+    }
+    .footer__copy { color: #6f6f6f; }
+
+    /* 게임물 등급 정보 */
+    .footer__rating {
+      grid-column: 9 / -1;
+      display: grid;
+      grid-template-columns: auto auto;
+      border: 1px solid #6a0000;
+      background: linear-gradient(180deg, #5a0006, #3a0004);
+      font-size: 12px;
+    }
+    .footer__rating div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 8px 12px;
+      white-space: nowrap;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+    .footer__rating div:nth-child(odd) { border-right: 1px solid rgba(255, 255, 255, .12); }
+    .footer__rating div:nth-last-child(-n+2) { border-bottom: 0; }
+    .footer__rating dt { flex-shrink: 0; color: #e7b3b3; }
+    .footer__rating dt::after { content: ''; display: inline-block; width: 1px; height: 11px; margin-left: 10px; background: rgba(255, 255, 255, .35); vertical-align: -1px; }
+    .footer__rating dd { color: #fff; font-weight: 500; }
+
+    @media (max-width: 1760px) {
+      .footer__logo { grid-column: 1 / -1; }
+      .footer__info { grid-column: 1 / span 7; }
+      .footer__rating { grid-column: 8 / -1; }
+    }
+    @media (max-width: 1280px) {
+      .footer__logo { grid-column: 1 / -1; }
+      .footer__info { grid-column: 1 / span 7; }
+      .footer__rating { grid-column: 8 / -1; }
+    }
+    @media (max-width: 1024px) {
+      .footer__info, .footer__rating { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+      .footer { padding: 44px 0 50px; }
+      .footer__logo img { width: 120px; }
+      .footer__links { font-size: 13px; }
+      .footer__links li::before { margin: 0 8px; }
+      .footer__links { margin-left: -17px; }
+      .footer__text { font-size: 12px; }
+      .footer__rating { grid-template-columns: 1fr; }
+      .footer__rating div { white-space: normal; }
+      .footer__rating div:nth-child(odd) { border-right: 0; }
+      .footer__rating div:nth-last-child(2) { border-bottom: 1px solid rgba(255, 255, 255, .12); }
+    }
+
     /* ================= SCROLL 효과 ================= */
     /* 히어로: 스크롤하면 배경은 천천히 내려가며 살짝 커지고 어두워짐,
        글자·버튼은 조금 더 빠르게 올라가며 사라짐 (--p: 0 → 1, JS가 넣어줌) */
@@ -777,10 +1262,12 @@
       .gnb__member .btn-line {
         flex: 1;
         margin: 0;
-        padding: 11px 0;
-        text-align: center;
+        height: 48px;
+        aspect-ratio: auto;
         font-size: 15px;
       }
+      .gnb > li.gnb__member { align-items: center; }
+      .gnb__member .btn-line.is-red { height: 56px; margin: -4px -4px; }
       .header.is-open .gnb { max-height: calc(100vh - var(--header-h)); overflow-y: auto; }
 
       /* 모바일: 소메뉴는 눌러서 펼치기 */
@@ -1074,11 +1561,164 @@
             <span class="news-card__more more-link">자세히 보기 <span class="more-link__arrow" aria-hidden="true">&rarr;</span></span>
           </div>
         </a>
+
+        <!-- 다덴 소식 아래 배너 -->
+        <a href="#" class="main-banner">
+          <img src="images/main_banner.png" alt="9월 머큐리 출시 MERCURY - 2,000Cash로 만나는 행운의 아이템! 2026. 8. 26 (수) ~ 2026. 9. 30 (수)">
+        </a>
+      </div>
+    </section>
+
+    <!-- MAIN SECTION 03 : 다덴 BOOK -->
+    <section class="book">
+      <div class="container">
+        <div class="book__head">
+          <p class="book__eyebrow">DARK EDEN</p>
+          <h2 class="book__title">다덴 <em>BOOK</em></h2>
+          <p class="book__desc">다크에덴의 세계를 더 깊이 이해할 수 있는 가이드</p>
+        </div>
+
+        <nav class="book__nav" aria-label="다덴 BOOK 메뉴">
+          <ul>
+            <li><a href="#" class="is-active" data-book="01">GUIDE</a></li>
+            <li><a href="#" data-book="02">게임 특징</a></li>
+            <li><a href="#" data-book="03">시나리오</a></li>
+            <li><a href="#" data-book="04">다덴 스케줄</a></li>
+          </ul>
+          <p class="book__nav-foot">DARK EDEN<br>WORLD GUIDE</p>
+        </nav>
+
+        <div class="book__cards">
+          <a href="#" class="book-card book-card--main" data-book="01">
+            <img class="book-card__img" src="images/book_img01.png" alt="">
+            <div class="book-card__body">
+              <p class="book-card__num">01</p>
+              <h3 class="book-card__title">초급 성장 가이드</h3>
+              <p class="book-card__text">처음 시작하는 생존자를 위한 안내</p>
+              <span class="more-link">VIEW <span class="more-link__arrow" aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+          <a href="#" class="book-card" data-book="02">
+            <img class="book-card__img" src="images/book_img02.png" alt="">
+            <div class="book-card__body">
+              <p class="book-card__num">02</p>
+              <h3 class="book-card__title">게임 특징</h3>
+              <p class="book-card__text">다크에덴의 핵심 시스템과<br>세계관을 알아보세요</p>
+              <span class="more-link">VIEW <span class="more-link__arrow" aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+          <a href="#" class="book-card" data-book="03">
+            <img class="book-card__img" src="images/book_img03.png" alt="">
+            <div class="book-card__body">
+              <p class="book-card__num">03</p>
+              <h3 class="book-card__title">시나리오</h3>
+              <p class="book-card__text">혼돈의 시대,<br>다크에덴의 이야기</p>
+              <span class="more-link">VIEW <span class="more-link__arrow" aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+          <a href="#" class="book-card" data-book="04">
+            <img class="book-card__img" src="images/book_img04.png" alt="">
+            <div class="book-card__body">
+              <p class="book-card__num">04</p>
+              <h3 class="book-card__title">다덴 스케줄</h3>
+              <p class="book-card__text">주요 일정과<br>업데이트를 확인하세요</p>
+              <span class="more-link">VIEW <span class="more-link__arrow" aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- 오른쪽: 다덴 RANKING -->
+        <aside class="book__side" aria-label="다덴 RANKING">
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+          <linearGradient id="gS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7ff"/><stop offset="1" stop-color="#6c7a96"/></linearGradient>
+          <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e05a6e"/><stop offset="1" stop-color="#5a0a18"/></linearGradient>
+          <linearGradient id="gO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8bcff"/><stop offset="1" stop-color="#3a2a90"/></linearGradient>
+        </defs></svg>
+          <div class="rank__head">
+            <h2 class="rank__title">다덴 <em>RANKING</em></h2>
+            <div class="rank__sub">
+              <p class="rank__desc">다크에덴을 이끄는 최강의 존재들</p>
+              <a href="#" class="rank__more more-link">전체보기 <span class="more-link__arrow" aria-hidden="true">&rarr;</span></a>
+            </div>
+          </div>
+          <div class="rank__panel">
+            <div class="rank__tabs" role="tablist">
+              <button type="button" class="rank__tab" data-rank="transil" aria-selected="false">트랜실베니아</button>
+              <button type="button" class="rank__tab" data-rank="changer" aria-selected="false">체인저</button>
+              <button type="button" class="rank__tab is-active" data-rank="dakia" aria-selected="true">다키아</button>
+              <button type="button" class="rank__tab" data-rank="trakia" aria-selected="false">트라키아</button>
+            </div>
+            <table class="rank__table">
+              <thead><tr><th>순위</th><th>종족</th><th>길드</th><th>캐릭터 명</th><th>레벨</th></tr></thead>
+              <tbody data-rank="transil" hidden>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">블러드문</td><td>648</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="뱀파이어"><svg viewBox="0 0 24 24" aria-label="뱀파이어"><path d="M12 3c3 2 6 2.5 8 2-1 6-4 11-8 16-4-5-7-10-8-16 2 .5 5 0 8-2z" fill="url(#gV)" stroke="#f0a0b0" stroke-width=".6"/><path d="M10 10l-1 4M14 10l1 4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8-7 8-7-8z" fill="#8a2a2a" stroke="#e05050" stroke-width="1"/></svg></span></td><td class="rank__name">로젠크로이츠</td><td>646</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="아우스터즈"><svg viewBox="0 0 24 24" aria-label="아우스터즈"><path d="M12 2l7 6-7 14-7-14z" fill="url(#gO)" stroke="#d6ccff" stroke-width=".6"/><path d="M5 8h14M12 2v20" stroke="#efe9ff" stroke-width=".6" opacity=".7"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">은빛달</td><td>645</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">카르마</td><td>644</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="뱀파이어"><svg viewBox="0 0 24 24" aria-label="뱀파이어"><path d="M12 3c3 2 6 2.5 8 2-1 6-4 11-8 16-4-5-7-10-8-16 2 .5 5 0 8-2z" fill="url(#gV)" stroke="#f0a0b0" stroke-width=".6"/><path d="M10 10l-1 4M14 10l1 4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8-7 8-7-8z" fill="#8a2a2a" stroke="#e05050" stroke-width="1"/></svg></span></td><td class="rank__name">레드아이</td><td>642</td></tr>
+              </tbody>
+              <tbody data-rank="changer" hidden>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="뱀파이어"><svg viewBox="0 0 24 24" aria-label="뱀파이어"><path d="M12 3c3 2 6 2.5 8 2-1 6-4 11-8 16-4-5-7-10-8-16 2 .5 5 0 8-2z" fill="url(#gV)" stroke="#f0a0b0" stroke-width=".6"/><path d="M10 10l-1 4M14 10l1 4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8-7 8-7-8z" fill="#8a2a2a" stroke="#e05050" stroke-width="1"/></svg></span></td><td class="rank__name">밤의군주</td><td>647</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">철혈</td><td>645</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">루시엘</td><td>644</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="아우스터즈"><svg viewBox="0 0 24 24" aria-label="아우스터즈"><path d="M12 2l7 6-7 14-7-14z" fill="url(#gO)" stroke="#d6ccff" stroke-width=".6"/><path d="M5 8h14M12 2v20" stroke="#efe9ff" stroke-width=".6" opacity=".7"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">에테르</td><td>643</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="뱀파이어"><svg viewBox="0 0 24 24" aria-label="뱀파이어"><path d="M12 3c3 2 6 2.5 8 2-1 6-4 11-8 16-4-5-7-10-8-16 2 .5 5 0 8-2z" fill="url(#gV)" stroke="#f0a0b0" stroke-width=".6"/><path d="M10 10l-1 4M14 10l1 4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">그림자송곳니</td><td>641</td></tr>
+              </tbody>
+              <tbody data-rank="dakia">
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">대리</td><td>645</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="아우스터즈"><svg viewBox="0 0 24 24" aria-label="아우스터즈"><path d="M12 2l7 6-7 14-7-14z" fill="url(#gO)" stroke="#d6ccff" stroke-width=".6"/><path d="M5 8h14M12 2v20" stroke="#efe9ff" stroke-width=".6" opacity=".7"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">겐류</td><td>644</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="아우스터즈"><svg viewBox="0 0 24 24" aria-label="아우스터즈"><path d="M12 2l7 6-7 14-7-14z" fill="url(#gO)" stroke="#d6ccff" stroke-width=".6"/><path d="M5 8h14M12 2v20" stroke="#efe9ff" stroke-width=".6" opacity=".7"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">네리엘</td><td>644</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="아우스터즈"><svg viewBox="0 0 24 24" aria-label="아우스터즈"><path d="M12 2l7 6-7 14-7-14z" fill="url(#gO)" stroke="#d6ccff" stroke-width=".6"/><path d="M5 8h14M12 2v20" stroke="#efe9ff" stroke-width=".6" opacity=".7"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">아펠</td><td>643</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">십이첩반상</td><td>643</td></tr>
+              </tbody>
+              <tbody data-rank="trakia" hidden>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="아우스터즈"><svg viewBox="0 0 24 24" aria-label="아우스터즈"><path d="M12 2l7 6-7 14-7-14z" fill="url(#gO)" stroke="#d6ccff" stroke-width=".6"/><path d="M5 8h14M12 2v20" stroke="#efe9ff" stroke-width=".6" opacity=".7"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="#e0507a" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#ff9ab6"/></svg></span></td><td class="rank__name">세라핌</td><td>646</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="뱀파이어"><svg viewBox="0 0 24 24" aria-label="뱀파이어"><path d="M12 3c3 2 6 2.5 8 2-1 6-4 11-8 16-4-5-7-10-8-16 2 .5 5 0 8-2z" fill="url(#gV)" stroke="#f0a0b0" stroke-width=".6"/><path d="M10 10l-1 4M14 10l1 4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8-7 8-7-8z" fill="#8a2a2a" stroke="#e05050" stroke-width="1"/></svg></span></td><td class="rank__name">크림슨</td><td>645</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">검귀</td><td>644</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="뱀파이어"><svg viewBox="0 0 24 24" aria-label="뱀파이어"><path d="M12 3c3 2 6 2.5 8 2-1 6-4 11-8 16-4-5-7-10-8-16 2 .5 5 0 8-2z" fill="url(#gV)" stroke="#f0a0b0" stroke-width=".6"/><path d="M10 10l-1 4M14 10l1 4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8-7 8-7-8z" fill="#8a2a2a" stroke="#e05050" stroke-width="1"/></svg></span></td><td class="rank__name">나이트폴</td><td>642</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="슬레이어"><svg viewBox="0 0 24 24" aria-label="슬레이어"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5L12 13.4 7.5 15.8l.9-5L4.8 7.3l5-.7z" fill="url(#gS)" stroke="#e8eef8" stroke-width=".6"/><path d="M12 15v7M9 19h6" stroke="#c9d2e0" stroke-width="1.4"/></svg></span></td><td><span class="rank__guild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5h5l-4 3.2 1.6 5L12 13l-4.6 3.2L9 11.2 5 8h5z" fill="#c69a4a"/></svg></span></td><td class="rank__name">청풍</td><td>641</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
       </div>
     </section>
 
     <!-- 다음 섹션은 여기부터 추가하면 자동으로 200px 간격이 적용됩니다 -->
   </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__logo"><img src="images/header_logo.png" alt="SOFTON"></div>
+      <div class="footer__info">
+        <ul class="footer__links">
+            <li><a href="#">회사소개</a></li>
+            <li><a href="#">제휴문의</a></li>
+            <li><a href="#">PC방</a></li>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#">운영정책</a></li>
+            <li><a href="#" class="is-strong">개인정보처리방침</a></li>
+            <li><a href="#">이메일주소무단수집거부</a></li>
+            <li><a href="#">사이트맵</a></li>
+        </ul>
+        <address class="footer__text">
+          <p class="footer__copy">Copyright &copy; SOFTON Corp. ALL RIGHTS RESERVED.</p>
+          <p>상호 : ㈜소프톤 / 사업자등록번호 : 214-86-36265</p>
+          <p>통신판매업신고번호 : 제2025-서울광진-1489호 / 고객센터 : 1600-9720 / Fax : 031-696-6920</p>
+          <p>대표이사 : 음승우 / 주소 : 서울시 광진구 광나루로56길 85, 1414호(구의동, 테크노마트)</p>
+        </address>
+      </div>
+      <dl class="footer__rating" aria-label="게임물 등급 정보">
+          <div><dt>제명</dt><dd>다크에덴</dd></div>
+          <div><dt>상호</dt><dd>㈜소프톤</dd></div>
+          <div><dt>이용등급</dt><dd>청소년이용불가</dd></div>
+          <div><dt>등급분류번호</dt><dd>제CC-NP-250807-005호</dd></div>
+          <div><dt>제작연월일</dt><dd>2000.3.24</dd></div>
+          <div><dt>신고/등록번호</dt><dd>게제1281호</dd></div>
+      </dl>
+    </div>
+  </footer>
 
   <script>
     // 모바일 메뉴
@@ -1147,6 +1787,35 @@
           }, 180);
         });
       });
+    })();
+
+    // ===== 다덴 BOOK: 왼쪽 메뉴와 카드 연결 (마우스를 올린 카드의 메뉴가 붉게) =====
+    (function () {
+      const links = document.querySelectorAll('.book__nav a');
+      const setActive = id => links.forEach(a => a.classList.toggle('is-active', a.dataset.book === id));
+      document.querySelectorAll('.book-card').forEach(card => {
+        card.addEventListener('mouseenter', () => setActive(card.dataset.book));
+      });
+      links.forEach(a => a.addEventListener('mouseenter', () => setActive(a.dataset.book)));
+    })();
+
+    // ===== 다덴 RANKING 서버 탭 =====
+    (function () {
+      const tabs = document.querySelectorAll('.rank__tab');
+      tabs.forEach(tab => tab.addEventListener('click', () => {
+        if (tab.classList.contains('is-active')) return;
+        tabs.forEach(t => {
+          const on = t === tab;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on);
+        });
+        document.querySelectorAll('.rank__table tbody').forEach(b => {
+          const on = b.dataset.rank === tab.dataset.rank;
+          b.hidden = !on;
+          b.classList.remove('is-entering');
+          if (on) { void b.offsetWidth; b.classList.add('is-entering'); }
+        });
+      }));
     })();
 
     // ===== 스크롤 효과 =====
