@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>다크에덴 REBORN</title>
+  <link rel="preload" as="image" href="images/hero_background_img.webp" fetchpriority="high">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -105,7 +107,7 @@
     }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
-    img { display: block; max-width: 100%; }
+    img { display: block; max-width: 100%; height: auto; }
     button { font-family: inherit; background: none; border: 0; cursor: pointer; color: inherit; }
 
     /* 섹션 간격 200px (배경이 이어지도록 섹션 안쪽 여백으로 적용) */
@@ -224,7 +226,7 @@
       font-size: 14px;
       color: #e6e6e6;
       white-space: nowrap;
-      background: url('images/btn_login.png') center / 100% 100% no-repeat;
+      background: url('images/btn_login.webp') center / 100% 100% no-repeat;
       transition: filter .2s ease, color .2s ease, transform .2s ease;
     }
     /* 회원가입 이미지는 바깥 장식(가시)이 커서 같은 높이면 본체가 작아 보임
@@ -234,7 +236,7 @@
       margin-top: -3px; margin-bottom: -3px;
       aspect-ratio: 1130 / 359;
       color: #fff;
-      background-image: url('images/btn_signup.png');
+      background-image: url('images/btn_signup.webp');
     }
     .btn-line + .btn-line { margin-left: 10px; }
     .btn-line:hover { color: #fff; filter: brightness(1.2); }
@@ -286,9 +288,9 @@
       transition: opacity 1.2s ease, transform 6s ease-out;
     }
     .hero__slide.is-active { opacity: 1; transform: scale(1); }
-    .hero__slide--1 { background-image: url('images/hero_background_img.png'); }
-    .hero__slide--2 { background-image: url('images/hero_background_img2.png'); }
-    .hero__slide--3 { background-image: url('images/hero_background_img3.png'); }
+    .hero__slide--1 { background-image: url('images/hero_background_img.webp'); }
+    .hero__slide--2 { background-image: url('images/hero_background_img2.webp'); }
+    .hero__slide--3 { background-image: url('images/hero_background_img3.webp'); }
     /* 3번 이미지는 가운데가 밝아서 글자가 잘 보이도록 살짝 어둡게 */
     .hero__slide--3::after {
       content: '';
@@ -589,14 +591,14 @@
       aspect-ratio: 704 / 196;
       font-size: 17px;
       color: #cfcfcf;
-      background: url('images/main_section02_button2.png') center / 100% 100% no-repeat;
+      background: url('images/main_section02_button2.webp') center / 100% 100% no-repeat;
       transition: color .4s ease, text-shadow .4s ease, filter .25s ease, transform .25s ease;
     }
     .news__tab::before {
       content: '';
       position: absolute; inset: 0;
       z-index: -1;
-      background: url('images/main_section02_button.png') center / 100% 100% no-repeat;
+      background: url('images/main_section02_button.webp') center / 100% 100% no-repeat;
       opacity: 0;
       transform: scale(.96);
       transition: opacity .45s ease, transform .45s cubic-bezier(.2, .8, .2, 1);
@@ -687,7 +689,7 @@
     .news-card__bg {
       position: absolute; inset: 0;
       z-index: -2;
-      background: url('images/main_update_bg.png') 60% center / cover no-repeat;
+      background: url('images/main_update_bg.webp') 60% center / cover no-repeat;
       transition: transform .8s cubic-bezier(.2, .8, .2, 1);
     }
     .news-card::after {                 /* 글자가 잘 보이도록 아래쪽만 어둡게 */
@@ -951,7 +953,7 @@
       /* book_border.png 의 투명 여백(좌우 19px, 위 22px, 아래 33px)을 바깥으로 밀어내 테두리가 카드 끝에 닿도록 */
       top: -3.4%; bottom: -5.1%; left: -1.872%; right: -1.872%;
       pointer-events: none;
-      background: url('images/book_border.png') center / 100% 100% no-repeat;
+      background: url('images/book_border.webp') center / 100% 100% no-repeat;
       opacity: .8;
       transition: opacity .4s ease, filter .4s ease;
     }
@@ -1120,9 +1122,9 @@
       background: center / contain no-repeat;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .6));
     }
-    .rank__medal--1 { background-image: url('images/main_ranking_01.png'); color: #ffe4a3; text-shadow: 0 0 6px rgba(255, 190, 80, .7); }
-    .rank__medal--2 { background-image: url('images/main_ranking_02.png'); color: #f2f4f7; text-shadow: 0 0 6px rgba(220, 230, 240, .6); }
-    .rank__medal--3 { background-image: url('images/main_ranking_03.png'); color: #ffcfa6; text-shadow: 0 0 6px rgba(230, 140, 70, .6); }
+    .rank__medal--1 { background-image: url('images/main_ranking_01.webp'); color: #ffe4a3; text-shadow: 0 0 6px rgba(255, 190, 80, .7); }
+    .rank__medal--2 { background-image: url('images/main_ranking_02.webp'); color: #f2f4f7; text-shadow: 0 0 6px rgba(220, 230, 240, .6); }
+    .rank__medal--3 { background-image: url('images/main_ranking_03.webp'); color: #ffcfa6; text-shadow: 0 0 6px rgba(230, 140, 70, .6); }
     /* 종족 · 길드 아이콘 */
     .rank__icon {
       display: inline-flex;
@@ -1542,7 +1544,7 @@
   <header class="header" id="header">
     <div class="header__inner">
       <h1 class="header__logo">
-        <a href="#"><img src="images/header_logo.png" alt="SOFTON"></a>
+        <a href="#"><img src="images/header_logo.webp" alt="SOFTON" width="748" height="249" decoding="async"></a>
       </h1>
 
       <div class="header__games">
@@ -1597,7 +1599,7 @@
       </nav>
 
       <div class="header__util">
-        <a href="#" class="header__search" aria-label="검색"><img src="images/main_icon01.png" alt="검색"></a>
+        <a href="#" class="header__search" aria-label="검색"><img src="images/main_icon01.webp" alt="검색" width="101" height="101" decoding="async"></a>
         <a href="#" class="btn-line header__member">로그인</a>
         <a href="#" class="btn-line is-red header__member">회원가입</a>
         <button class="menu-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -1618,10 +1620,10 @@
       <div class="hero__content">
         <p class="hero__copy">다시 <em>피로</em> 쓰여진 세계</p>
         <h2 class="hero__title">
-          <img src="images/hero_logo.png" alt="다크에덴 REBORN">
+          <img src="images/hero_logo.webp" alt="다크에덴 REBORN" width="3118" height="1535" decoding="async" fetchpriority="high">
         </h2>
         <p class="hero__desc">멈추지 않는 전쟁, 진화하는 다크에덴</p>
-        <a href="#" class="hero__start"><img src="images/hero_gamestart.png" alt="GAME START"></a>
+        <a href="#" class="hero__start"><img src="images/hero_gamestart.webp" alt="GAME START" width="1843" height="614" decoding="async"></a>
       </div>
 
       <div class="hero__paging">
@@ -1640,25 +1642,25 @@
       <ul class="quick__list">
         <li>
           <a href="#">
-            <img src="images/main_icon02.png" alt="">
+            <img src="images/main_icon02.webp" alt="" width="268" height="268" decoding="async">
             <div><strong>게임 다운로드</strong><span>지금 바로 시작하세요</span></div>
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="images/main_icon03.png" alt="">
+            <img src="images/main_icon03.webp" alt="" width="294" height="294" decoding="async">
             <div><strong>신규/복귀 가이드</strong><span>처음이라면 여기서</span></div>
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="images/main_icon04.png" alt="">
+            <img src="images/main_icon04.webp" alt="" width="373" height="295" decoding="async">
             <div><strong>공식 유튜브</strong><span>영상으로 보는 다크에덴</span></div>
           </a>
         </li>
         <li>
           <a href="#">
-            <img class="quick__icon--support" src="images/main_icon05.png" alt="">
+            <img class="quick__icon--support" src="images/main_icon05.webp" alt="" width="775" height="930" decoding="async">
             <div><strong>고객센터</strong><span>문의 및 이용안내</span></div>
           </a>
         </li>
@@ -1725,13 +1727,13 @@
         <!-- 다덴 소식 아래 배너 -->
         <div class="main-banner" role="region" aria-roledescription="캐러셀" aria-label="이벤트 배너">
           <a href="#" class="main-banner__slide is-active" aria-label="배너 1 / 3: 9월 머큐리 출시" aria-hidden="false">
-            <img src="images/main_banner.png" alt="9월 머큐리 출시 MERCURY - 2,000Cash로 만나는 행운의 아이템! 2026. 8. 26 (수) ~ 2026. 9. 30 (수)">
+            <img src="images/main_banner.webp" alt="9월 머큐리 출시 MERCURY - 2,000Cash로 만나는 행운의 아이템! 2026. 8. 26 (수) ~ 2026. 9. 30 (수)" width="2172" height="425" decoding="async">
           </a>
           <a href="#" class="main-banner__slide" aria-label="배너 2 / 3: 10월의 행운상자 출시" aria-hidden="true" inert>
-            <img src="images/main_banner%202.png" alt="10월의 행운상자 출시! 다크에덴 오리진 2026년 10월의 아이템! 다양한 아이템을 획득하세요!">
+            <img src="images/main_banner%202.webp" alt="10월의 행운상자 출시! 다크에덴 오리진 2026년 10월의 아이템! 다양한 아이템을 획득하세요!" width="2170" height="425" decoding="async">
           </a>
           <a href="#" class="main-banner__slide" aria-label="배너 3 / 3: 수집가 코스튬 출시" aria-hidden="true" inert>
-            <img src="images/main_banner%203.png" alt="개성만점! 수집가 코스튬 출시 - 거친 매력의 완성!">
+            <img src="images/main_banner%203.webp" alt="개성만점! 수집가 코스튬 출시 - 거친 매력의 완성!" width="2172" height="425" decoding="async">
           </a>
         </div>
       </div>
@@ -1765,7 +1767,7 @@
           <!-- 큰 카드: 01 → 02 → 03 → 04 순서로 자동 전환 -->
           <a href="#" class="book-card book-card--main" data-book="01" aria-live="polite">
             <div class="book-slide is-active" data-book="01">
-              <img class="book-card__img" src="images/book_img01.png" alt="">
+              <img class="book-card__img" src="images/book_img01.webp" alt="" width="988" height="616" decoding="async" loading="lazy">
               <div class="book-card__body">
                 <p class="book-card__num">01</p>
                 <h3 class="book-card__title">초급 성장 가이드</h3>
@@ -1774,7 +1776,7 @@
               </div>
             </div>
             <div class="book-slide" data-book="02">
-              <img class="book-card__img" src="images/book_img02.png" alt="">
+              <img class="book-card__img" src="images/book_img02.webp" alt="" width="988" height="616" decoding="async" loading="lazy">
               <div class="book-card__body">
                 <p class="book-card__num">02</p>
                 <h3 class="book-card__title">게임 특징</h3>
@@ -1783,7 +1785,7 @@
               </div>
             </div>
             <div class="book-slide" data-book="03">
-              <img class="book-card__img" src="images/book_img03.png" alt="">
+              <img class="book-card__img" src="images/book_img03.webp" alt="" width="987" height="617" decoding="async" loading="lazy">
               <div class="book-card__body">
                 <p class="book-card__num">03</p>
                 <h3 class="book-card__title">시나리오</h3>
@@ -1792,7 +1794,7 @@
               </div>
             </div>
             <div class="book-slide" data-book="04">
-              <img class="book-card__img" src="images/book_img04.png" alt="">
+              <img class="book-card__img" src="images/book_img04.webp" alt="" width="988" height="618" decoding="async" loading="lazy">
               <div class="book-card__body">
                 <p class="book-card__num">04</p>
                 <h3 class="book-card__title">다덴 스케줄</h3>
@@ -1802,7 +1804,7 @@
             </div>
           </a>
           <a href="#" class="book-card book-card--sm" data-book="01">
-            <img class="book-card__img" src="images/book_img01.png" alt="">
+            <img class="book-card__img" src="images/book_img01.webp" alt="" width="988" height="616" decoding="async" loading="lazy">
             <div class="book-card__body">
               <p class="book-card__num">01</p>
               <h3 class="book-card__title">초급 성장 가이드</h3>
@@ -1811,7 +1813,7 @@
             </div>
           </a>
           <a href="#" class="book-card book-card--sm" data-book="02">
-            <img class="book-card__img" src="images/book_img02.png" alt="">
+            <img class="book-card__img" src="images/book_img02.webp" alt="" width="988" height="616" decoding="async" loading="lazy">
             <div class="book-card__body">
               <p class="book-card__num">02</p>
               <h3 class="book-card__title">게임 특징</h3>
@@ -1820,7 +1822,7 @@
             </div>
           </a>
           <a href="#" class="book-card book-card--sm" data-book="03">
-            <img class="book-card__img" src="images/book_img03.png" alt="">
+            <img class="book-card__img" src="images/book_img03.webp" alt="" width="987" height="617" decoding="async" loading="lazy">
             <div class="book-card__body">
               <p class="book-card__num">03</p>
               <h3 class="book-card__title">시나리오</h3>
@@ -1829,7 +1831,7 @@
             </div>
           </a>
           <a href="#" class="book-card book-card--sm" data-book="04">
-            <img class="book-card__img" src="images/book_img04.png" alt="">
+            <img class="book-card__img" src="images/book_img04.webp" alt="" width="988" height="618" decoding="async" loading="lazy">
             <div class="book-card__body">
               <p class="book-card__num">04</p>
               <h3 class="book-card__title">다덴 스케줄</h3>
@@ -1859,32 +1861,32 @@
               <colgroup><col class="c-rank"><col class="c-race"><col class="c-guild"><col class="c-name"><col class="c-level"></colgroup>
               <thead><tr><th>순위</th><th>종족</th><th>길드</th><th>캐릭터 명</th><th>레벨</th></tr></thead>
               <tbody data-rank="transil" hidden>
-                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild05.png" alt="길드 마크"></span></td><td class="rank__name">블러드문</td><td>648</td></tr>
-                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.png" alt="슬레이어"></span></td><td><span class="rank__guild"><img src="images/main_guild04.png" alt="길드 마크"></span></td><td class="rank__name">로젠크로이츠</td><td>646</td></tr>
-                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.png" alt="뱀파이어"></span></td><td><span class="rank__guild"><img src="images/main_guild03.png" alt="길드 마크"></span></td><td class="rank__name">은빛달</td><td>645</td></tr>
-                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild05.png" alt="길드 마크"></span></td><td class="rank__name">카르마</td><td>644</td></tr>
-                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild02.png" alt="길드 마크"></span></td><td class="rank__name">레드아이</td><td>642</td></tr>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild05.webp" alt="길드 마크" width="278" height="265" decoding="async" loading="lazy"></span></td><td class="rank__name">블러드문</td><td>648</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.webp" alt="슬레이어" width="515" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild04.webp" alt="길드 마크" width="267" height="263" decoding="async" loading="lazy"></span></td><td class="rank__name">로젠크로이츠</td><td>646</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.webp" alt="뱀파이어" width="434" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild03.webp" alt="길드 마크" width="232" height="276" decoding="async" loading="lazy"></span></td><td class="rank__name">은빛달</td><td>645</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild05.webp" alt="길드 마크" width="278" height="265" decoding="async" loading="lazy"></span></td><td class="rank__name">카르마</td><td>644</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild02.webp" alt="길드 마크" width="255" height="261" decoding="async" loading="lazy"></span></td><td class="rank__name">레드아이</td><td>642</td></tr>
               </tbody>
               <tbody data-rank="changer" hidden>
-                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.png" alt="뱀파이어"></span></td><td><span class="rank__guild"><img src="images/main_guild02.png" alt="길드 마크"></span></td><td class="rank__name">밤의군주</td><td>647</td></tr>
-                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild05.png" alt="길드 마크"></span></td><td class="rank__name">철혈</td><td>645</td></tr>
-                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.png" alt="뱀파이어"></span></td><td><span class="rank__guild"><img src="images/main_guild01.png" alt="길드 마크"></span></td><td class="rank__name">루시엘</td><td>644</td></tr>
-                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild04.png" alt="길드 마크"></span></td><td class="rank__name">에테르</td><td>643</td></tr>
-                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.png" alt="슬레이어"></span></td><td><span class="rank__guild"><img src="images/main_guild01.png" alt="길드 마크"></span></td><td class="rank__name">그림자송곳니</td><td>641</td></tr>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.webp" alt="뱀파이어" width="434" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild02.webp" alt="길드 마크" width="255" height="261" decoding="async" loading="lazy"></span></td><td class="rank__name">밤의군주</td><td>647</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild05.webp" alt="길드 마크" width="278" height="265" decoding="async" loading="lazy"></span></td><td class="rank__name">철혈</td><td>645</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.webp" alt="뱀파이어" width="434" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild01.webp" alt="길드 마크" width="240" height="269" decoding="async" loading="lazy"></span></td><td class="rank__name">루시엘</td><td>644</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild04.webp" alt="길드 마크" width="267" height="263" decoding="async" loading="lazy"></span></td><td class="rank__name">에테르</td><td>643</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.webp" alt="슬레이어" width="515" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild01.webp" alt="길드 마크" width="240" height="269" decoding="async" loading="lazy"></span></td><td class="rank__name">그림자송곳니</td><td>641</td></tr>
               </tbody>
               <tbody data-rank="dakia">
-                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.png" alt="슬레이어"></span></td><td><span class="rank__guild"><img src="images/main_guild03.png" alt="길드 마크"></span></td><td class="rank__name">대리</td><td>645</td></tr>
-                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.png" alt="뱀파이어"></span></td><td><span class="rank__guild"><img src="images/main_guild02.png" alt="길드 마크"></span></td><td class="rank__name">겐류</td><td>644</td></tr>
-                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild05.png" alt="길드 마크"></span></td><td class="rank__name">네리엘</td><td>644</td></tr>
-                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.png" alt="슬레이어"></span></td><td><span class="rank__guild"><img src="images/main_guild03.png" alt="길드 마크"></span></td><td class="rank__name">아펠</td><td>643</td></tr>
-                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.png" alt="뱀파이어"></span></td><td><span class="rank__guild"><img src="images/main_guild04.png" alt="길드 마크"></span></td><td class="rank__name">십이첩반상</td><td>643</td></tr>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.webp" alt="슬레이어" width="515" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild03.webp" alt="길드 마크" width="232" height="276" decoding="async" loading="lazy"></span></td><td class="rank__name">대리</td><td>645</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.webp" alt="뱀파이어" width="434" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild02.webp" alt="길드 마크" width="255" height="261" decoding="async" loading="lazy"></span></td><td class="rank__name">겐류</td><td>644</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild05.webp" alt="길드 마크" width="278" height="265" decoding="async" loading="lazy"></span></td><td class="rank__name">네리엘</td><td>644</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.webp" alt="슬레이어" width="515" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild03.webp" alt="길드 마크" width="232" height="276" decoding="async" loading="lazy"></span></td><td class="rank__name">아펠</td><td>643</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.webp" alt="뱀파이어" width="434" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild04.webp" alt="길드 마크" width="267" height="263" decoding="async" loading="lazy"></span></td><td class="rank__name">십이첩반상</td><td>643</td></tr>
               </tbody>
               <tbody data-rank="trakia" hidden>
-                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild01.png" alt="길드 마크"></span></td><td class="rank__name">세라핌</td><td>646</td></tr>
-                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.png" alt="뱀파이어"></span></td><td><span class="rank__guild"><img src="images/main_guild01.png" alt="길드 마크"></span></td><td class="rank__name">크림슨</td><td>645</td></tr>
-                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.png" alt="아우스터즈"></span></td><td><span class="rank__guild"><img src="images/main_guild04.png" alt="길드 마크"></span></td><td class="rank__name">검귀</td><td>644</td></tr>
-                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.png" alt="슬레이어"></span></td><td><span class="rank__guild"><img src="images/main_guild02.png" alt="길드 마크"></span></td><td class="rank__name">나이트폴</td><td>642</td></tr>
-                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.png" alt="슬레이어"></span></td><td><span class="rank__guild"><img src="images/main_guild03.png" alt="길드 마크"></span></td><td class="rank__name">청풍</td><td>641</td></tr>
+                <tr><td><span class="rank__medal rank__medal--1">1</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild01.webp" alt="길드 마크" width="240" height="269" decoding="async" loading="lazy"></span></td><td class="rank__name">세라핌</td><td>646</td></tr>
+                <tr><td><span class="rank__medal rank__medal--2">2</span></td><td><span class="rank__icon" title="뱀파이어"><img src="images/main_ranking_vampire.webp" alt="뱀파이어" width="434" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild01.webp" alt="길드 마크" width="240" height="269" decoding="async" loading="lazy"></span></td><td class="rank__name">크림슨</td><td>645</td></tr>
+                <tr><td><span class="rank__medal rank__medal--3">3</span></td><td><span class="rank__icon" title="아우스터즈"><img src="images/main_ranking_ousters.webp" alt="아우스터즈" width="472" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild04.webp" alt="길드 마크" width="267" height="263" decoding="async" loading="lazy"></span></td><td class="rank__name">검귀</td><td>644</td></tr>
+                <tr><td><span class="rank__num">4</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.webp" alt="슬레이어" width="515" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild02.webp" alt="길드 마크" width="255" height="261" decoding="async" loading="lazy"></span></td><td class="rank__name">나이트폴</td><td>642</td></tr>
+                <tr><td><span class="rank__num">5</span></td><td><span class="rank__icon" title="슬레이어"><img src="images/main_ranking_slayer.webp" alt="슬레이어" width="515" height="488" decoding="async" loading="lazy"></span></td><td><span class="rank__guild"><img src="images/main_guild03.webp" alt="길드 마크" width="232" height="276" decoding="async" loading="lazy"></span></td><td class="rank__name">청풍</td><td>641</td></tr>
               </tbody>
             </table>
           </div>
@@ -1898,7 +1900,7 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="footer__logo"><img src="images/header_logo.png" alt="SOFTON"></div>
+      <div class="footer__logo"><img src="images/header_logo.webp" alt="SOFTON" width="748" height="249" decoding="async"></div>
       <ul class="footer__links">
             <li><a href="#">회사소개</a></li>
             <li><a href="#">제휴문의</a></li>
@@ -1948,10 +1950,30 @@
       });
     });
 
+    // 화면에 보이는 슬라이드만 실행하고, 탭을 벗어나면 반복 작업을 멈춤.
+    function visibleAutoplay(element, advance, delay, canPlay = () => true) {
+      let timer, visible = !('IntersectionObserver' in window);
+      function stop() { clearInterval(timer); }
+      function start() {
+        stop();
+        if (visible && !document.hidden && canPlay()) timer = setInterval(advance, delay);
+      }
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          visible = entries[0].isIntersecting;
+          start();
+        });
+        observer.observe(element);
+      }
+      document.addEventListener('visibilitychange', start);
+      start();
+      return { start, stop };
+    }
+
     // 히어로 슬라이드 + 페이지네이션 (현재 화면만 #980000, 나머지 #C3C3C3)
     const slides = document.querySelectorAll('.hero__slide');
     const bars = document.querySelectorAll('.hero__bars button');
-    let current = 0, timer;
+    let current = 0;
 
     function go(i) {
       slides[current].classList.remove('is-active');
@@ -1960,10 +1982,8 @@
       slides[current].classList.add('is-active');
       bars[current].classList.add('is-active');
     }
-    function autoplay() {
-      clearInterval(timer);
-      timer = setInterval(() => go((current + 1) % slides.length), 5000);
-    }
+    const heroAutoplay = visibleAutoplay(document.querySelector('.hero'), () => go((current + 1) % slides.length), 5000);
+    function autoplay() { heroAutoplay.start(); }
     bars.forEach((b, i) => b.addEventListener('click', () => { go(i); autoplay(); }));
     autoplay();
 
@@ -1973,7 +1993,7 @@
       if (!banner) return;
       const slides = [...banner.querySelectorAll('.main-banner__slide')];
       if (slides.length < 2) return;
-      let index = 0, timer;
+      let index = 0;
       function show(next) {
         index = (next + slides.length) % slides.length;
         slides.forEach((slide, i) => {
@@ -1983,12 +2003,7 @@
           slide.inert = !active;
         });
       }
-      function start() {
-        clearInterval(timer);
-        if (!document.hidden) timer = setInterval(() => show(index + 1), 3500);
-      }
-      document.addEventListener('visibilitychange', start);
-      start();
+      visibleAutoplay(banner, () => show(index + 1), 3500);
     })();
 
     // ===== 다덴 소식 탭 (부드러운 전환) =====
@@ -2030,7 +2045,8 @@
       const ids = slides.map(sl => sl.dataset.book);
       const links = document.querySelectorAll('.book__nav a');
       const smalls = document.querySelectorAll('.book-card--sm');
-      let idx = 0, timer = null, paused = false;
+      let idx = 0, paused = false;
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
       function show(i) {
         idx = (i + ids.length) % ids.length;
@@ -2043,13 +2059,18 @@
           c.classList.toggle('is-current', pos === 0);
           c.style.order = pos;
           c.classList.remove('is-moved');
-          void c.offsetWidth;
-          if (pos !== 0) c.classList.add('is-moved');
+        });
+        // 모든 카드 변경을 모은 뒤 레이아웃을 한 번만 계산.
+        void main.parentElement.offsetWidth;
+        smalls.forEach(c => {
+          if (!c.classList.contains('is-current')) c.classList.add('is-moved');
         });
         main.dataset.book = id;
       }
-      function start() { stop(); if (!paused) timer = setInterval(() => show(idx + 1), INTERVAL); }
-      function stop() { clearInterval(timer); }
+      const bookAutoplay = visibleAutoplay(main, () => show(idx + 1), INTERVAL, () => !paused && !reducedMotion.matches);
+      function start() { bookAutoplay.start(); }
+      function stop() { bookAutoplay.stop(); }
+      reducedMotion.addEventListener('change', start);
 
       // 메뉴에 마우스를 올리면 그 항목으로 바로 바뀌고, 떼면 다시 자동 전환
       links.forEach(el => {
@@ -2066,7 +2087,7 @@
       main.addEventListener('mouseleave', () => { paused = false; start(); });
 
       show(0);
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+      start();
     })();
 
     // ===== 다덴 RANKING 서버 탭 =====
@@ -2106,18 +2127,20 @@
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // 1) 히어로 패럴랙스 (requestAnimationFrame으로 스크롤당 1번만 계산)
-      let ticking = false;
+      let ticking = false, visualHeight = visual.offsetHeight || innerHeight, lastProgress = '';
       function update() {
-        const h = visual.offsetHeight || innerHeight;
-        const p = Math.min(Math.max(scrollY / h, 0), 1);
-        hero.style.setProperty('--p', p.toFixed(4));
+        const p = Math.min(Math.max(scrollY / visualHeight, 0), 1).toFixed(4);
+        if (p !== lastProgress) {
+          hero.style.setProperty('--p', p);
+          lastProgress = p;
+        }
         ticking = false;
       }
       if (!reduce) {
         addEventListener('scroll', () => {
           if (!ticking) { ticking = true; requestAnimationFrame(update); }
         }, { passive: true });
-        addEventListener('resize', update, { passive: true });
+        addEventListener('resize', () => { visualHeight = visual.offsetHeight || innerHeight; update(); }, { passive: true });
         update();
       }
 
